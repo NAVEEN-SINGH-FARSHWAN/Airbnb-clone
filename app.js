@@ -117,7 +117,7 @@ app.use((err, req, res, next) => {
     res.locals.error = req.flash("error") || [];
     res.locals.currUser = req.user || null;
 
-    res.status(statusCode).render("error.ejs", { message });
+    return res.status(statusCode).render("error.ejs", { message });
 });
 
 app.listen(8080, () => {
