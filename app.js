@@ -103,14 +103,20 @@ app.use("/",userRouter);
 
 
 
-// //9. 404 Route
-// app.all("*", (req, res, next) => {
-//     next(new ExpressError(404, "Page Not Found!"));
-// });
 
+//9. 404 Route
+app.all("*any", (req, res, next) => {
+    next(new ExpressError(404, "Page Not Found!"));
+});
 // 10. Error Handling Middleware
 app.use((err, req, res, next) => {
     let { statusCode = 500, message = "something went wrong!" } = err;
+    
+    // Error page ke liye res.locals ko safe kiya taaki navbar aur flash crash na ho
+    res.locals.success = req.flash("success") || [];
+    res.locals.error = req.flash("error") || [];
+    res.locals.currUser = req.user || null;
+
     res.status(statusCode).render("error.ejs", { message });
 });
 
