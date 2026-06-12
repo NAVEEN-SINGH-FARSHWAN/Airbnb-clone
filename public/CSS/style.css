@@ -124,3 +124,30 @@ body{
     padding-right: 0;
 }
 
+/* Responsive adjustments for elements */
+@media (max-width: 575px) {
+  .search-inp {
+    padding: 0.5rem 1rem !important;
+    font-size: 0.85rem !important;
+  }
+  .search-text-desktop {
+    display: none; /* Hide 'Search' text on small devices, icon remains */
+  }
+  .navbar {
+    height: auto !important;
+    padding: 0.75rem 0;
+  }
+}
+
+.filter-link {
+  display: inline-block;
+}
+
+/* Smooth card scale effect similar to modern web designs */
+.listing-card {
+  transition: transform 0.2s ease-in-out;
+}
+.listing-card:hover {
+  transform: scale(1.02);
+}
+
