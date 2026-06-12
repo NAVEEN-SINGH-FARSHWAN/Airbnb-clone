@@ -171,3 +171,63 @@ body {
         font-size: 0.95rem !important;
     }
 }
+
+/* Airbnb Style Aspect Ratio System for Mobile Columns */
+.aspect-img-container {
+    position: relative;
+    width: 100%;
+    /* Airbnb standard aspect ratio for grid results */
+    aspect-ratio: 20 / 19;
+}
+
+.aspect-card-img {
+    object-fit: cover !important;
+}
+
+/* Specific padding overrides for the new 2-column mobile grid columns */
+.listing-col {
+    padding-left: 0.5rem !important;
+    padding-right: 0.5rem !important;
+}
+
+/* Responsive typography scaling for small columns */
+@media (max-width: 575px) {
+    /* Set specific image constraints to maintain ratio on narrow cols */
+    .aspect-img-container {
+        aspect-ratio: 1.12 / 1; /* Slightly squarer ratio for tight mobile grid */
+    }
+
+    .responsive-h6 {
+        font-size: 0.85rem !important;
+        margin-bottom: 0.1rem !important;
+    }
+    
+    .location-country-text {
+        font-size: 0.75rem !important;
+        margin-top: -0.1rem !important;
+    }
+    
+    .star-rating-val {
+        font-size: 0.8rem !important;
+    }
+    
+    .price-night-text {
+        font-size: 0.9rem !important;
+        margin-top: 0.2rem !important;
+    }
+    
+    .night-text, .tax-inline-info {
+        font-size: 0.7rem !important;
+    }
+
+    /* Adjust main container padding to make room for columns */
+    .container {
+        padding-left: 1rem !important;
+        padding-right: 1rem !important;
+    }
+    
+    /* Optional: Hide Guest Favorite badge in two-column mobile view to keep it clean */
+    .d-mobile-none {
+        display: none !important;
+    }
+}

@@ -78,40 +78,41 @@
   </div>
 </div>
 
-<div class="row row-cols-xxl-4 row-cols-lg-3 row-cols-md-2 row-cols-1 mt-3">
+
+<div class="row row-cols-xxl-4 row-cols-lg-3 row-cols-md-2 row-cols-2 mt-3">
     <% if(allListings.length === 0) { %>
       <div class="col-12 text-center mt-5">
         <h4>No destination found for this filter!</h4>
       </div>
     <% } %>
     <% for(let listing of allListings) { %>
-      <div class="col mb-4">
+      <div class="col mb-4 listing-col">
         <a href="/listings/<%= listing._id %>" class="listing-link">
           <div class="card listing-card h-100 border-0 m-0 position-relative">
             
-            <div class="position-absolute top-0 start-0 m-3 px-2 py-1 bg-white rounded-pill shadow-sm" style="z-index: 2; font-size: 0.75rem; font-weight: bold;">
+            <div class="position-absolute top-0 start-0 m-2 px-2 py-1 bg-white rounded-pill shadow-sm d-mobile-none" style="z-index: 2; font-size: 0.65rem; font-weight: bold;">
               Guest favourite
             </div>
             
-            <div class="position-absolute top-0 end-0 m-3 text-white" style="z-index: 2; font-size: 1.25rem; filter: drop-shadow(0px 2px 4px rgba(0,0,0,0.6));">
+            <div class="position-absolute top-0 end-0 m-2 text-white" style="z-index: 2; font-size: 1rem; filter: drop-shadow(0px 2px 4px rgba(0,0,0,0.6));">
               <i class="fa-regular fa-heart"></i>
             </div>
 
-            <div class="img-container style-card-img" style="aspect-ratio: 20 / 19; overflow: hidden; border-radius: 1rem;">
-              <img src="<%= listing.image.url %>" class="card-img-top w-100 h-100" alt="listing_image" style="object-fit: cover;">
+            <div class="aspect-img-container" style="border-radius: 1rem; overflow: hidden;">
+              <img src="<%= listing.image.url %>" class="card-img-top w-100 h-100 aspect-card-img" alt="listing_image">
             </div>
             
-            <div class="card-body px-0 pt-2">
+            <div class="card-body px-0 pt-1 pb-1">
               <div class="d-flex justify-content-between align-items-start m-0">
-                <h6 class="text-dark font-weight-bold m-0 text-truncate" style="max-width: 80%;"><%= listing.title %></h6>
-                <span class="text-dark small"><i class="fa-solid fa-star small"></i> 5.0</span>
+                <h6 class="text-dark font-weight-bold m-0 text-truncate responsive-h6" style="max-width: 80%;"><%= listing.title %></h6>
+                <span class="text-dark small star-rating-val"><i class="fa-solid fa-star small"></i> 5.0</span>
               </div>
-              <p class="card-text m-0 text-secondary small">
+              <p class="card-text m-0 text-secondary small location-country-text">
                 <%= listing.location %>, <%= listing.country %>
               </p>
-              <p class="card-text m-0 mt-1 text-dark">
-                <b>&#8377;<%= listing.price ? listing.price.toLocaleString("en-IN") : "N/A" %></b> <span class="text-secondary small">/night</span>
-                <i class="tax-info text-danger small">&nbsp;&nbsp; +18% GST</i>
+              <p class="card-text m-0 mt-1 text-dark price-night-text">
+                <b>&#8377;<%= listing.price ? listing.price.toLocaleString("en-IN") : "N/A" %></b> <span class="text-secondary small night-text">/night</span>
+                <i class="tax-info text-danger small pt-0 mt-0 tax-inline-info">&nbsp;&nbsp; +18% GST</i>
               </p>
             </div>
 
