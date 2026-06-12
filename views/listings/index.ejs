@@ -79,39 +79,35 @@
 </div>
 
 
-<div class="row row-cols-xxl-4 row-cols-lg-3 row-cols-md-2 row-cols-2 g-3 mt-2">
+<div class="airbnb-custom-grid mt-3">
     <% if(allListings.length === 0) { %>
-      <div class="col-12 text-center mt-5">
+      <div class="no-listings-found">
         <h4>No destination found for this filter!</h4>
       </div>
     <% } %>
     <% for(let listing of allListings) { %>
-      <div class="col mb-2 listing-col">
+      <div class="airbnb-custom-col">
         <a href="/listings/<%= listing._id %>" class="listing-link">
-          <div class="card listing-card h-100 border-0 m-0 position-relative bg-transparent">
+          <div class="airbnb-custom-card">
             
-            <div class="position-absolute top-0 end-0 m-2 text-white" style="z-index: 2; font-size: 1.15rem; filter: drop-shadow(0px 1px 3px rgba(0,0,0,0.6));">
+            <div class="wishlist-heart-icon">
               <i class="fa-regular fa-heart"></i>
             </div>
 
-            <div class="aspect-img-container">
-              <img src="<%= listing.image.url %>" class="card-img-top w-100 h-100 aspect-card-img" alt="listing_image">
+            <div class="airbnb-custom-img-box">
+              <img src="<%= listing.image.url %>" alt="listing_image">
             </div>
             
-            <div class="card-body-custom">
-              <div class="d-flex justify-content-between align-items-center mb-0 mt-1">
-                <span class="text-dark font-weight-bold responsive-title text-truncate" style="max-width: 75%; display: inline-block;">
-                  <%= listing.title %>
-                </span>
-                <span class="text-dark small star-rating-val flex-shrink-0">
-                  <i class="fa-solid fa-star small"></i> 5.0
-                </span>
+            <div class="airbnb-custom-metadata">
+              <div class="metadata-header-line">
+                <span class="responsive-title text-truncate"><%= listing.title %></span>
+                <span class="star-rating-val flex-shrink-0"><i class="fa-solid fa-star small"></i> 5.0</span>
               </div>
-              <p class="m-0 text-secondary location-country-text text-truncate">
+              <p class="m-0 location-country-text text-truncate">
                 <%= listing.location %>, <%= listing.country %>
               </p>
-              <p class="m-0 mt-0.5 price-night-text text-dark">
-                <b>&#8377;<%= listing.price ? listing.price.toLocaleString("en-IN") : "N/A" %></b> <span class="text-secondary night-text">/night</span>
+              <p class="m-0 price-night-text">
+                <b>&#8377;<%= listing.price ? listing.price.toLocaleString("en-IN") : "N/A" %></b> <span class="night-text">/night</span>
                 <i class="tax-info text-danger small tax-inline-info">&nbsp;&nbsp; +18% GST</i>
               </p>
             </div>
@@ -121,6 +117,7 @@
       </div> 
     <% } %>
 </div>
+
 <script>
     let taxSwitch = document.getElementById("flexSwitchCheckDefault");
     taxSwitch.addEventListener("click", () => {

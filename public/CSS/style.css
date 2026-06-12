@@ -150,7 +150,105 @@ body {
 }
 
 /* ==========================================================================
-   6. SINGLE UNIFIED MEDIA QUERY FOR SMARTPHONES (Under 575px)
+   6. Native Airbnb Flexbox Layout Grid (Bootstrap Bypass Engine)
+   ========================================================================== */
+.airbnb-custom-grid {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    margin: 0 auto;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Base Desktop View Configuration (4 Columns in a Row) */
+.airbnb-custom-col {
+    flex: 0 0 25%;
+    max-width: 25%;
+    padding: 0.5rem;
+    box-sizing: border-box;
+}
+
+.airbnb-custom-card {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    position: relative;
+    background: transparent;
+}
+
+/* Strict Image Box Ratio Engine */
+.airbnb-custom-img-box {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1 / 1 !important; /* Perfect square across all responsive formats */
+    overflow: hidden;
+    border-radius: 0.75rem !important;
+}
+
+.airbnb-custom-img-box img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    transition: transform 0.3s ease;
+}
+
+.airbnb-custom-card:hover .airbnb-custom-img-box img {
+    transform: scale(1.03);
+}
+
+.airbnb-custom-metadata {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-top: 0.35rem;
+}
+
+.metadata-header-line {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.wishlist-heart-icon {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    z-index: 5;
+    color: #ffffff;
+    font-size: 1.15rem;
+    filter: drop-shadow(0px 1px 3px rgba(0,0,0,0.6));
+}
+
+.no-listings-found {
+    width: 100%;
+    text-align: center;
+    margin-top: 3rem;
+}
+
+/* ==========================================================================
+   7. Advanced Responsive Fluid Breakpoints
+   ========================================================================== */
+
+/* Tablet View Configuration (3 Columns in a Row) */
+@media (max-width: 991px) {
+    .airbnb-custom-col {
+        flex: 0 0 33.333%;
+        max-width: 33.333%;
+    }
+}
+
+/* Handheld Small Devices View (2 Columns in a Row) */
+@media (max-width: 767px) {
+    .airbnb-custom-col {
+        flex: 0 0 50%;
+        max-width: 50%;
+    }
+}
+
+/* ==========================================================================
+   8. SINGLE UNIFIED MEDIA QUERY FOR SMARTPHONES (Under 575px)
    ========================================================================== */
 @media (max-width: 575px) {
     /* Navbar Responsive fixes */
@@ -166,9 +264,15 @@ body {
         padding: 0.75rem 0;
     }
     
-    /* Strict Card Image constraints to stop stretching */
-    .aspect-img-container {
-        aspect-ratio: 1.05 / 1 !important; 
+    /* Strict Mobile Dynamic Dual-Column Override */
+    .airbnb-custom-col {
+        flex: 0 0 50% !important;
+        max-width: 50% !important;
+        padding: 0.35rem !important; /* Airbnb official compact spacing */
+    }
+
+    .airbnb-custom-img-box {
+        aspect-ratio: 1 / 1 !important; /* Locks square layout tightly on small screens */
     }
 
     /* Fixed Line-Height & Sizes to prevent Overlapping */
@@ -206,8 +310,8 @@ body {
 
     /* Outer layout margin adjustments for mobile screens */
     .container {
-        padding-left: 0.75rem !important;
-        padding-right: 0.75rem !important;
+        padding-left: 0.5rem !important;
+        padding-right: 0.5rem !important;
     }
     
     .d-mobile-none {
