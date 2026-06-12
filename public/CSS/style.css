@@ -31,7 +31,7 @@ body {
 }
 
 /* ==========================================================================
-   3. Modern Airbnb Listing Cards System
+   3. Modern Airbnb Listing Cards System (Desktop & Base Settings)
    ========================================================================== */
 .listing-link {
     text-decoration: none !important;
@@ -39,41 +39,40 @@ body {
 
 .listing-card {
     border: none !important;
-    margin-bottom: 2rem;
+    margin-bottom: 1.5rem;
     background: transparent !important;
-    transition: transform 0.2s ease-in-out;
 }
 
-/* Aspect Ratio integration instead of fixed height to prevent image distortion */
-.style-card-img {
-    aspect-ratio: 20 / 19;
+/* Unified Aspect Ratio Container - Perfect Square for Desktop & Tablet */
+.aspect-img-container {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1 / 1 !important; 
     overflow: hidden;
-    border-radius: 1rem !important;
-    width: 100%;
+    border-radius: 0.75rem !important;
 }
 
-.style-card-img img {
-    width: 100%;
-    height: 100%;
+.aspect-card-img {
+    width: 100% !important;
+    height: 100% !important;
     object-fit: cover !important;
     transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
-/* Fluid Hover Zoom Feedbacks */
-.listing-card:hover .style-card-img img {
+/* Fluid Hover Zoom Feedback */
+.listing-card:hover .aspect-card-img {
     transform: scale(1.03);
 }
 
-.card-body {
-    padding: 0 !important;
+/* Custom Metadata Text Spacing Box */
+.card-body-custom {
+    display: block;
+    width: 100%;
+    padding: 0.25rem 0 0 0 !important;
     background: transparent !important;
 }
 
-.card-text p {
-    font-weight: 400 !important;
-}
-
-/* Heart & Badge Overlay Controls */
+/* Heart Icons Layout Controls */
 .fa-heart {
     transition: transform 0.2s ease;
 }
@@ -81,6 +80,16 @@ body {
     transform: scale(1.15);
     color: #fe424d !important;
     cursor: pointer;
+}
+
+/* Base list grid configuration spacing for rows */
+.listing-col {
+    padding-left: 0.35rem !important;
+    padding-right: 0.35rem !important;
+}
+
+.filter-link {
+    display: inline-block;
 }
 
 /* ==========================================================================
@@ -141,136 +150,28 @@ body {
 }
 
 /* ==========================================================================
-   6. Micro-Responsive Media Queries (Airbnb Phone View Fix)
+   6. SINGLE UNIFIED MEDIA QUERY FOR SMARTPHONES (Under 575px)
    ========================================================================== */
-.filter-link {
-    display: inline-block;
-}
-
 @media (max-width: 575px) {
+    /* Navbar Responsive fixes */
     .search-inp {
         padding: 0.5rem 1rem !important;
         font-size: 0.85rem !important;
     }
     .search-text-desktop {
-        display: none; /* Icon remains, removes bulky lettering text */
+        display: none; 
     }
     .navbar {
         height: auto !important;
         padding: 0.75rem 0;
     }
     
-    /* Forces full screen card adjustments for responsive phone viewports */
-    .row-cols-1 > .col {
-        width: 100% !important;
-        padding-left: 1.2rem !important;
-        padding-right: 1.2rem !important;
-    }
-    
-    .card-body h6 {
-        font-size: 0.95rem !important;
-    }
-}
-
-/* Airbnb Style Aspect Ratio System for Mobile Columns */
-.aspect-img-container {
-    position: relative;
-    width: 100%;
-    /* Airbnb standard aspect ratio for grid results */
-    aspect-ratio: 20 / 19;
-}
-
-.aspect-card-img {
-    object-fit: cover !important;
-}
-
-/* Specific padding overrides for the new 2-column mobile grid columns */
-.listing-col {
-    padding-left: 0.5rem !important;
-    padding-right: 0.5rem !important;
-}
-
-/* Responsive typography scaling for small columns */
-@media (max-width: 575px) {
-    /* Set specific image constraints to maintain ratio on narrow cols */
+    /* Strict Card Image constraints to stop stretching */
     .aspect-img-container {
-        aspect-ratio: 1.12 / 1; /* Slightly squarer ratio for tight mobile grid */
+        aspect-ratio: 1.05 / 1 !important; 
     }
 
-    .responsive-h6 {
-        font-size: 0.85rem !important;
-        margin-bottom: 0.1rem !important;
-    }
-    
-    .location-country-text {
-        font-size: 0.75rem !important;
-        margin-top: -0.1rem !important;
-    }
-    
-    .star-rating-val {
-        font-size: 0.8rem !important;
-    }
-    
-    .price-night-text {
-        font-size: 0.9rem !important;
-        margin-top: 0.2rem !important;
-    }
-    
-    .night-text, .tax-inline-info {
-        font-size: 0.7rem !important;
-    }
-
-    /* Adjust main container padding to make room for columns */
-    .container {
-        padding-left: 1rem !important;
-        padding-right: 1rem !important;
-    }
-    
-    /* Optional: Hide Guest Favorite badge in two-column mobile view to keep it clean */
-    .d-mobile-none {
-        display: none !important;
-    }
-}
-
-/* ==========================================================================
-   Airbnb Dual-Column Component Layout Overrides
-   ========================================================================== */
-
-/* Forces image wrappers to stay strictly responsive without dynamic stretching */
-.aspect-img-container {
-    position: relative;
-    width: 100%;
-    aspect-ratio: 1 / 1 !important; /* Perfect square layout like official site */
-    overflow: hidden;
-    border-radius: 0.75rem !important;
-}
-
-.aspect-card-img {
-    width: 100% !important;
-    height: 100% !important;
-    object-fit: cover !important;
-}
-
-/* Custom disconnected content block for metadata text spacing */
-.card-body-custom {
-    display: block;
-    width: 100%;
-    padding: 0.25rem 0 0 0 !important;
-    background: transparent !important;
-}
-
-/* Base list grid configuration */
-.listing-col {
-    padding-left: 0.35rem !important;
-    padding-right: 0.35rem !important;
-}
-
-/* Responsive constraints specifically tailored for mobile screens (under 575px) */
-@media (max-width: 575px) {
-    .aspect-img-container {
-        aspect-ratio: 1.05 / 1 !important; /* Keeps image heights perfectly scaled on screens */
-    }
-
+    /* Fixed Line-Height & Sizes to prevent Overlapping */
     .responsive-title {
         font-size: 0.88rem !important;
         font-weight: 600 !important;
@@ -303,9 +204,13 @@ body {
         font-weight: 400;
     }
 
-    /* Outer wrapper margin refinements */
+    /* Outer layout margin adjustments for mobile screens */
     .container {
         padding-left: 0.75rem !important;
         padding-right: 0.75rem !important;
+    }
+    
+    .d-mobile-none {
+        display: none !important;
     }
 }
