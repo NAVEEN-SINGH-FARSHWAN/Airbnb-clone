@@ -1,51 +1,115 @@
-body{
+/* ==========================================================================
+   1. Base Application & Body Elements
+   ========================================================================== */
+body {
     font-family: "Plus Jakarta Sans", sans-serif !important;
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+    background-color: #ffffff;
 }
 
-.container{
+.container {
     flex: 1;
 }
-/* navbar */
- .navbar{
-    height: 5rem;
-    background-color: white;
- }
 
- .fa-compass{
+/* ==========================================================================
+   2. Header & Navigation Component
+   ========================================================================== */
+.navbar {
+    min-height: 5rem;
+    background-color: white;
+}
+
+.fa-compass {
     color: #fe424d;
     font-size: 2rem;
- }
+}
 
- .nav-link{
+.nav-link {
     color: #222222 !important;
- }
+}
 
- /* footer */
- .f-info-links a{
-    text-decoration: none;
-    color: #222222;
- }
- .f-info-links a:hover{
-    text-decoration:underline;
-   
- }
-  .f-info-links,
-  .f-info-socials,
-  .f-info-brand{
+/* ==========================================================================
+   3. Modern Airbnb Listing Cards System
+   ========================================================================== */
+.listing-link {
+    text-decoration: none !important;
+}
+
+.listing-card {
+    border: none !important;
+    margin-bottom: 2rem;
+    background: transparent !important;
+    transition: transform 0.2s ease-in-out;
+}
+
+/* Aspect Ratio integration instead of fixed height to prevent image distortion */
+.style-card-img {
+    aspect-ratio: 20 / 19;
+    overflow: hidden;
+    border-radius: 1rem !important;
     width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-    .f-info-socials i{
-        font-size: 1.2rem;
-       margin-right: 1rem;
-    }
+}
 
- .f-info{
+.style-card-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover !important;
+    transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+/* Fluid Hover Zoom Feedbacks */
+.listing-card:hover .style-card-img img {
+    transform: scale(1.03);
+}
+
+.card-body {
+    padding: 0 !important;
+    background: transparent !important;
+}
+
+.card-text p {
+    font-weight: 400 !important;
+}
+
+/* Heart & Badge Overlay Controls */
+.fa-heart {
+    transition: transform 0.2s ease;
+}
+.fa-heart:hover {
+    transform: scale(1.15);
+    color: #fe424d !important;
+    cursor: pointer;
+}
+
+/* ==========================================================================
+   4. Buttons & Global Utility Pages
+   ========================================================================== */
+.add-btn, .edit-btn {
+    background-color: #fe424d !important;
+    border: none !important;
+}
+
+.show-img {
+    height: 30vh;
+    border-radius: 1rem;
+    object-fit: cover;
+}
+
+.btns {
+    display: flex;
+}
+
+.show-card {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+/* ==========================================================================
+   5. Footer Systems Layout
+   ========================================================================== */
+.f-info {
     text-align: center;
     height: 8rem;
     background-color: #ebebeb;
@@ -53,101 +117,57 @@ body{
     flex-wrap: wrap;
     justify-content: center;
     align-items: space-evenly;
-
- }
-
- /* Cards */
- .listing-card{
-    border: none !important;
-    margin-bottom: 2rem;
- }
-
- /* .card-img-top{
-    border-radius: 1rem !important;
-    width: 100% !important;
-    object-fit: cover !important;
- } */
-
- .card-img-top {
-    border-radius: 1rem !important;
-    width: 100% !important;
-    height: 20rem !important; /* Yeh line add karna zaroori hai uniformity ke liye */
-    object-fit: cover !important; /* Isse image stretch nahi hogi */
 }
 
-
- .card-body{
-    padding: 0 !important;
- }
-
- .card-text p{
-    font-weight: 400 !important;
-
- }
- .listing-link{
+.f-info-links a {
     text-decoration: none;
- }
-
- /* Card Effect */
- .card-img-overlay{
-    opacity: 0;
- }
-.card-img-overlay:hover{
-    opacity: 0.2;
-    background-color: white;
+    color: #222222;
 }
 
-/* New Page */
-.add-btn{
-    background-color: #fe424d  !important;
-    border: none !important;
-
+.f-info-links a:hover {
+    text-decoration: underline;
 }
 
-/* Edit Page */
-.edit-btn{
-    background-color: #fe424d  !important;
-    border: none !important;
-}
-
-/* Show Page */
-.show-img{
-    height: 30vh;
-}
-
-.btns{
+.f-info-links, .f-info-socials, .f-info-brand {
+    width: 100%;
     display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.show-card{
-    padding-left: 0;
-    padding-right: 0;
+.f-info-socials i {
+    font-size: 1.2rem;
+    margin-right: 1rem;
 }
 
-/* Responsive adjustments for elements */
-@media (max-width: 575px) {
-  .search-inp {
-    padding: 0.5rem 1rem !important;
-    font-size: 0.85rem !important;
-  }
-  .search-text-desktop {
-    display: none; /* Hide 'Search' text on small devices, icon remains */
-  }
-  .navbar {
-    height: auto !important;
-    padding: 0.75rem 0;
-  }
-}
-
+/* ==========================================================================
+   6. Micro-Responsive Media Queries (Airbnb Phone View Fix)
+   ========================================================================== */
 .filter-link {
-  display: inline-block;
+    display: inline-block;
 }
 
-/* Smooth card scale effect similar to modern web designs */
-.listing-card {
-  transition: transform 0.2s ease-in-out;
+@media (max-width: 575px) {
+    .search-inp {
+        padding: 0.5rem 1rem !important;
+        font-size: 0.85rem !important;
+    }
+    .search-text-desktop {
+        display: none; /* Icon remains, removes bulky lettering text */
+    }
+    .navbar {
+        height: auto !important;
+        padding: 0.75rem 0;
+    }
+    
+    /* Forces full screen card adjustments for responsive phone viewports */
+    .row-cols-1 > .col {
+        width: 100% !important;
+        padding-left: 1.2rem !important;
+        padding-right: 1.2rem !important;
+    }
+    
+    .card-body h6 {
+        font-size: 0.95rem !important;
+    }
 }
-.listing-card:hover {
-  transform: scale(1.02);
-}
-
