@@ -1,85 +1,6 @@
 <% layout("layouts/boilerplate") -%>
 
-<style>
-  #filters {
-    display: flex;
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    align-items: center;
-    padding: 0.5rem 0;
-    -webkit-overflow-scrolling: touch;
-  }
-  #filters::-webkit-scrollbar {
-    display: none; /* Hide scrollbar for clean look */
-  }
-  .filter-link {
-    text-decoration: none;
-    color: #222222 !important;
-  }
-  .filter {
-    text-align: center;
-    margin-right: 2rem;
-    margin-top: 1rem;
-    opacity: 0.7;
-    transition: opacity 0.2s;
-    flex: 0 0 auto;
-  }
-  .filter:hover, .filter-link:focus .filter {
-    opacity: 1;
-    cursor: pointer;
-    border-bottom: 2px solid #fe424d;
-  }
-  .filter p {
-    font-size: 0.8rem;
-    margin-bottom: 0.25rem;
-  }
-  .tax-info {
-    display: none;
-  }
-  .tax-toggle {
-    border: 1px solid #b0b0b0;
-    border-radius: 1rem;
-    height: 3.25rem;
-    padding: 1rem;
-    display: flex;
-    align-items: center;
-    margin-top: 1rem;
-    white-space: nowrap;
-  }
-  @media (max-width: 991px) {
-    .tax-toggle {
-      margin-left: 0;
-      width: 100%;
-      justify-content: space-between;
-    }
-  }
-</style>
-
-<div class="d-flex flex-column flex-lg-row align-items-lg-center justify-content-between">
-  <div id="filters">
-    <a href="/listings" class="filter-link"><div class="filter"><div><i class="fa-solid fa-list"></i></div><p>All</p></div></a>
-    <a href="/listings?category=Trending" class="filter-link"><div class="filter"><div><i class="fa-solid fa-fire"></i></div><p>Trending</p></div></a>
-    <a href="/listings?category=Rooms" class="filter-link"><div class="filter"><div><i class="fa-solid fa-bed"></i></div><p>Rooms</p></div></a>
-    <a href="/listings?category=Iconic Cities" class="filter-link"><div class="filter"><div><i class="fa-solid fa-mountain-city"></i></div><p>Iconic Cities</p></div></a>
-    <a href="/listings?category=Mountains" class="filter-link"><div class="filter"><div><i class="fa-solid fa-mountain"></i></div><p>Mountains</p></div></a>
-    <a href="/listings?category=Castles" class="filter-link"><div class="filter"><div><i class="fa-brands fa-fort-awesome"></i></div><p>Castles</p></div></a>
-    <a href="/listings?category=Pools" class="filter-link"><div class="filter"><div><i class="fa-solid fa-person-swimming"></i></div><p>Pools</p></div></a>
-    <a href="/listings?category=Camping" class="filter-link"><div class="filter"><div><i class="fa-solid fa-campground"></i></div><p>Camping</p></div></a>
-    <a href="/listings?category=Farms" class="filter-link"><div class="filter"><div><i class="fa-solid fa-cow"></i></div><p>Farms</p></div></a>
-    <a href="/listings?category=Arctic" class="filter-link"><div class="filter"><div><i class="fa-solid fa-snowflake"></i></div><p>Arctic</p></div></a>
-    <a href="/listings?category=Domes" class="filter-link"><div class="filter"><div><i class="fa-solid fa-igloo"></i></div><p>Domes</p></div></a>
-  </div>
-
-  <div class="tax-toggle ms-auto">
-    <div class="form-check-reverse form-switch">
-      <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
-      <label class="form-check-label" for="flexSwitchCheckDefault">Display total after taxes</label>
-    </div>
-  </div>
-</div>
-
-
-<div class="airbnb-custom-grid mt-3">
+<div class="airbnb-custom-grid">
     <% if(allListings.length === 0) { %>
       <div class="no-listings-found">
         <h4>No destination found for this filter!</h4>
@@ -117,13 +38,3 @@
       </div> 
     <% } %>
 </div>
-
-<script>
-    let taxSwitch = document.getElementById("flexSwitchCheckDefault");
-    taxSwitch.addEventListener("click", () => {
-      let taxInfo = document.getElementsByClassName("tax-info");
-      for(let info of taxInfo) {
-        info.style.display = (info.style.display !== "inline") ? "inline" : "none";
-      }
-    });
-</script>
