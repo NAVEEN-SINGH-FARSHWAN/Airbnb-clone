@@ -3,12 +3,7 @@ const Listing = require("../models/listing");
 const maptilerClient = require('@maptiler/client');
 maptilerClient.config.apiKey = process.env.MAPTILER_API_KEY;
 
-// module.exports.index = async (req, res) => {
-//     const allListings = await Listing.find({});
-//     res.render("listings/index.ejs", { allListings });
-// };
-
-// 1. Existing module.exports.index ko isse replace karein:
+// 1. Index Layer (Category Filter Implementation)
 module.exports.index = async (req, res) => {
     let { category } = req.query;
     let filter = {};
@@ -19,7 +14,7 @@ module.exports.index = async (req, res) => {
     res.render("listings/index.ejs", { allListings });
 };
 
-// 2. File ke sabse last mein yeh naya controller add karein:
+// 2. Search Engine Controller
 module.exports.searchListings = async (req, res) => {
     let { location } = req.query;
     if (!location) {
@@ -36,9 +31,9 @@ module.exports.renderNewForm = (req, res) => {
     res.render("listings/new.ejs");
 };
 
+// 3. Show Controller (Deep Populating Author and Owner Fields)
 module.exports.showListing = async (req, res) => {
     let { id } = req.params;
-
     const listing = await Listing.findById(id)
         .populate({
             path: "reviews",
@@ -52,12 +47,11 @@ module.exports.showListing = async (req, res) => {
         req.flash("error", "Requested Listing doesn't exist!");
         return res.redirect("/listings");
     }
-    console.log(listing);
     res.render("listings/show.ejs", { listing });
 };
 
+// 4. Create New Resource Pipeline
 module.exports.createListing = async (req, res, next) => {
-    // 1. MapTiler API ko call karke Location (text) ko Coordinates mein badalna
     const geoData = await maptilerClient.geocoding.forward(req.body.listing.location, { limit: 1 });
 
     let url = req.file.path;
@@ -67,11 +61,9 @@ module.exports.createListing = async (req, res, next) => {
     newListing.owner = req.user._id;
     newListing.image = { url, filename };
 
-    // 2. Agar API ne coordinates diye hain, toh use 'geometry' mein save karein
     if (geoData.features.length > 0) {
         newListing.geometry = geoData.features[0].geometry;
     } else {
-        // Agar location invalid ho toh default point de dein
         newListing.geometry = { type: 'Point', coordinates: [0, 0] }; 
     }
 
@@ -92,11 +84,25 @@ module.exports.renderEditForm = async (req, res) => {
     res.render("listings/edit.ejs", { listing, originalImageUrl });
 };
 
+// 5. UPGRADED UPDATE PIPELINE (Strict Checking Enabled)
 module.exports.updateListing = async (req, res) => {
     let { id } = req.params;
-    let listing = await Listing.findByIdAndUpdate(id, { ...req.body.listing });
 
-    // Agar nayi image upload hui hai
+    // A. Pehle update bundle fetch aur query parameters extract karo
+    let updateData = { ...req.body.listing };
+
+    // B. Geospatial API Sync: Agar location badli hai toh fresh coordinates nikaalo
+    if(req.body.listing.location) {
+        const geoData = await maptilerClient.geocoding.forward(req.body.listing.location, { limit: 1 });
+        if (geoData.features.length > 0) {
+            updateData.geometry = geoData.features[0].geometry;
+        }
+    }
+
+    // C. Mongoose findByIdAndUpdate logic run karo explicitly pass karke
+    let listing = await Listing.findByIdAndUpdate(id, updateData, { runValidators: true, new: true });
+
+    // D. Multi-part handling: Agar user ne nayi photo select ki hai
     if (typeof req.file !== "undefined") {
         let url = req.file.path;
         let filename = req.file.filename;
@@ -104,8 +110,6 @@ module.exports.updateListing = async (req, res) => {
         await listing.save();
     }
     
-    // (Optional) Agar location bhi update karni ho toh yahan dobara geocoding call kar sakte hain
-
     req.flash("success", "Listing Updated!");
     return res.redirect(`/listings/${id}`);
 };
@@ -113,10 +117,6 @@ module.exports.updateListing = async (req, res) => {
 module.exports.destroyListing = async (req, res) => {
     let { id } = req.params;
     let deletedListing = await Listing.findByIdAndDelete(id);
-    console.log(deletedListing);
     req.flash("success", "Listing deleted!");
-
     res.redirect("/listings");
 };
-
-
