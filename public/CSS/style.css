@@ -31,15 +31,41 @@ body {
 }
 
 /* ==========================================================================
-   3. Buttons & Global Utility Pages
+   3. Premium Action Buttons (Airbnb Theme)
    ========================================================================== */
-.add-btn, .edit-btn {
-    background-color: #fe424d !important;
+.btn-stylish-edit {
+    background-color: #222222 !important;
+    color: #ffffff !important;
+    font-weight: 600 !important;
+    border: 1px solid #222222 !important;
+    border-radius: 8px !important;
+    transition: all 0.2s ease-in-out !important;
+}
+
+.btn-stylish-edit:hover {
+    background-color: #ffffff !important;
+    color: #222222 !important;
+    border-color: #222222 !important;
+}
+
+.btn-stylish-delete {
+    background: linear-gradient(135deg, #fe424d 0%, #e61e4d 100%) !important;
+    color: #ffffff !important;
+    font-weight: 600 !important;
     border: none !important;
+    border-radius: 8px !important;
+    box-shadow: 0 3px 8px rgba(254, 66, 77, 0.2) !important;
+    transition: all 0.2s ease-in-out !important;
+}
+
+.btn-stylish-delete:hover {
+    background: linear-gradient(135deg, #e61e4d 0%, #bd103b 100%) !important;
+    box-shadow: 0 4px 12px rgba(254, 66, 77, 0.35) !important;
+    transform: translateY(-1px);
 }
 
 .show-img {
-    height: 30vh;
+    height: 45vh;
     border-radius: 1rem;
     object-fit: cover;
 }
@@ -88,7 +114,7 @@ body {
 }
 
 /* ==========================================================================
-   5. Native Airbnb Flexbox Layout Grid (Fixes Big Image Issue)
+   5. Native Airbnb Flexbox Layout Grid (4 Columns Desktop Fix)
    ========================================================================== */
 .airbnb-custom-grid {
     display: flex !important;
@@ -99,7 +125,7 @@ body {
     box-sizing: border-box;
 }
 
-/* Default Desktop View (4 Cards in a Row - 25% width) */
+/* Default Desktop View (Strictly 4 Cards in a Row - 25% width) */
 .airbnb-custom-col {
     flex: 0 0 25% !important;
     max-width: 25% !important;
@@ -115,11 +141,10 @@ body {
     background: transparent;
 }
 
-/* Image Wrapper System to keep size in control */
 .airbnb-custom-img-box {
     position: relative;
     width: 100%;
-    aspect-ratio: 1 / 1 !important; /* Forces perfect square */
+    aspect-ratio: 1 / 1 !important; 
     overflow: hidden;
     border-radius: 0.75rem !important;
 }
@@ -168,11 +193,11 @@ body {
 }
 
 /* ==========================================================================
-   6. Advanced Responsive Breakpoints (Tablet, Small Screen, Mobile)
+   6. Advanced Responsive Breakpoints (Tablet, Mobile)
    ========================================================================== */
 
 /* Tablet View Configuration (3 Columns in a Row) */
-@media (max-width: 991px) {
+@media (max-width: 1200px) {
     .airbnb-custom-col {
         flex: 0 0 33.333% !important;
         max-width: 33.333% !important;
@@ -187,25 +212,23 @@ body {
     }
 }
 
-/* STRICT OVERRIDE FOR SMARTPHONES (Under 575px - True 2-Column Grid) */
+/* OVERRIDE FOR SMARTPHONES */
 @media (max-width: 575px) {
     .navbar {
         height: auto !important;
         padding: 0.75rem 0;
     }
     
-    /* Dynamic Dual-Column Override: Isse image choti ho jayegi aur 2 cards sath aayenge */
     .airbnb-custom-col {
         flex: 0 0 50% !important;
         max-width: 50% !important;
-        padding: 0.35rem !important; /* Compact spacing like Airbnb */
+        padding: 0.35rem !important; 
     }
 
     .airbnb-custom-img-box {
         aspect-ratio: 1 / 1 !important; 
     }
 
-    /* Fixed Sizes to prevent dynamic overlapping or text cutting */
     .responsive-title {
         font-size: 0.85rem !important;
         font-weight: 600 !important;

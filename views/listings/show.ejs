@@ -3,30 +3,35 @@
 <link href="https://unpkg.com/maplibre-gl@latest/dist/maplibre-gl.css" rel="stylesheet" />
 <script src="https://unpkg.com/maplibre-gl@latest/dist/maplibre-gl.js"></script>
 
-<div class="row">
-    <div class="col-8 offset-3 mt-3">
-        <h3><%=listing.title%></h3>
+<div class="row mt-3">
+    <div class="col-8 offset-3">
+        <h3><%= listing.title %></h3>
     </div>
-    <div class="card col-6 offset-3 show-card listing-card">
-        <img src="<%=listing.image.url%>" class="card-img-top show-img" alt="listing_image">
-        <div class="card-body">
+    
+    <div class="card col-6 offset-3 show-card listing-card border-0">
+        <img src="<%= listing.image.url %>" class="card-img-top show-img" alt="listing_image">
+        <div class="card-body px-0">
             <p class="card-text"> <i>Owned by: <%= listing.owner?.username %></i> </p>
-            <p class="card-text"> <%=listing.description%> </p>
-            <p class="card-text"> &#8377;<%=listing.price.toLocaleString("en-IN")%></p>
-            <p class="card-text">  <%=listing.location%></p>
-            <p class="card-text">   <%=listing.country%></p>
+            <p class="card-text"> <%= listing.description %> </p>
+            <p class="card-text"> &#8377;<%= listing.price.toLocaleString("en-IN") %> / night</p>
+            <p class="card-text"> <%= listing.location %></p>
+            <p class="card-text"> <%= listing.country %></p>
         </div>
     </div>
     <br>
 
-    <% if(currUser && listing.owner && listing.owner._id.equals(currUser._id)){%>
-    <div class="row col-6 offset-3 mb-3 d-flex align-items-center">
-        <div class="col-auto">
-            <a href="/listings/<%=listing._id %>/edit" class="btn btn-dark edit-btn px-4">Edit</a>
+    <% if(currUser && listing.owner && listing.owner._id.equals(currUser._id)){ %>
+    <div class="row col-6 offset-3 mb-3 d-flex align-items-center gap-2">
+        <div class="col-auto p-0">
+            <a href="/listings/<%= listing._id %>/edit" class="btn btn-stylish-edit px-4 py-2">
+                <i class="fas fa-edit me-1"></i> Edit
+            </a>
         </div>
-        <div class="col-auto">
-            <form method="POST" action="/listings/<%=listing._id%>?_method=DELETE" class="m-0">
-                <button class="btn btn-dark">Delete</button>
+        <div class="col-auto p-0">
+            <form method="POST" action="/listings/<%= listing._id %>?_method=DELETE" class="m-0">
+                <button class="btn btn-stylish-delete px-4 py-2">
+                    <i class="fas fa-trash-alt me-1"></i> Delete
+                </button>
             </form>
         </div>
     </div> 
@@ -34,9 +39,9 @@
 
     <div class="col-8 offset-3 mb-3">
         <hr>
-        <% if(currUser){%>
+        <% if(currUser){ %>
         <h4>Leave a Review</h4>
-        <form action="/listings/<%=listing.id %>/reviews" method="POST" novalidate class="needs-validation">
+        <form action="/listings/<%= listing.id %>/reviews" method="POST" novalidate class="needs-validation">
             <div class="mb-3 mt-3">
                 <label for="rating" class="form-label">Rating</label>
                 <fieldset class="starability-slot">
@@ -63,49 +68,48 @@
         <hr>
         <% } %>
 
+        <% if(listing.reviews.length > 0) { %>
         <p><b>All Reviews</b></p>
         <div class="row">
-            <%for(let review of listing.reviews){ %>
-            <div class="card col-5 ms-3 mb-3">
+            <% for(let review of listing.reviews){ %>
+            <div class="card col-5 ms-3 mb-3 border shadow-sm" style="border-radius: 12px;">
                 <div class="card-body">
-                    <h5 class="card-title">@<%=review.author.username%></h5>
+                    <h5 class="card-title">@<%= review.author.username %></h5>
                     <p class="starability-result card-text" data-rating="<%= review.rating %>"></p>
-                    <p class="card-text"><%= review.comment %></p>
+                    <p class="card-text mt-2"><%= review.comment %></p>
                 </div>
-                <form action="/listings/<%=listing._id%>/reviews/<%=review._id%>?_method=DELETE"  class="mb-3" method="POST">
-                    <button class="btn btn-sm btn-dark mt-2">Delete</button>
+                <% if(currUser && review.author && review.author._id.equals(currUser._id)) { %>
+                <form action="/listings/<%= listing._id %>/reviews/<%= review._id %>?_method=DELETE" class="mb-3 ms-3" method="POST">
+                    <button class="btn btn-sm btn-danger btn-stylish-delete px-3 py-1">Delete</button>
                 </form>
+                <% } %>
             </div>
-            <%} %>
+            <% } %>
         </div>
+        <% } %>
     </div>
 
     <div class="col-8 offset-3 mb-3">
+        <hr>
         <h3>Where you'll be</h3>
-        <div id="map" style="width: 100%; height: 400px; border-radius: 10px;"></div>
+        <div id="map" style="width: 100%; height: 400px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);"></div>
     </div>
 </div>
 
 <script>
-    // 1. Apna Listing data EJS se JavaScript mein lana
     const listing = JSON.parse(`<%- JSON.stringify(listing) %>`);
-    
-    // 2. Yahan apni MapTiler API Key daalein
-    const mapToken = "brdkecnzeNCGLZ1p8I7s";// <-- Isko change zaroor karein!
+    const mapToken = "brdkecnzeNCGLZ1p8I7s";
 
-    // 3. Map render karna
     const map = new maplibregl.Map({
-        container: 'map', // div ka id
+        container: 'map', 
         style: `https://api.maptiler.com/maps/streets-v2/style.json?key=${mapToken}`, 
-        center: listing.geometry.coordinates, // Database se aaye longitude aur latitude
+        center: listing.geometry.coordinates, 
         zoom: 9 
     });
 
-    // 4. Map par Lal Marker lagana
-    const marker = new maplibregl.Marker({ color: "#fe424d" }) // Airbnb jaisa red color
+    const marker = new maplibregl.Marker({ color: "#fe424d" }) 
         .setLngLat(listing.geometry.coordinates)
         .setPopup(new maplibregl.Popup({ offset: 25 })
         .setHTML(`<h5>${listing.title}</h5><p>Exact location provided after booking</p>`))
         .addTo(map);
 </script>
-
