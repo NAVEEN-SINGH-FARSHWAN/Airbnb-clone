@@ -16,28 +16,21 @@ module.exports.index = async (req, res) => {
 // 2. Advanced Multi-Modal Search Engine Controller
 module.exports.searchListings = async (req, res) => {
     let { location, category, guests } = req.query;
-    
-    // Dynamic Query Bundle Compose karein
     let searchQuery = {};
 
-    // A. Location Search Logic (Case-insensitive dynamic filtering)
     if (location && location.trim() !== "") {
         searchQuery.location = { $regex: location.trim(), $options: "i" };
     }
 
-    // B. Category Logic Linkage (Agar category filter clicked hai)
     if (category && category.trim() !== "") {
         searchQuery.category = category;
     }
 
-    // C. Guests Capabilities Mapping (Find listings that can accommodate >= requested guests)
     if (guests && !isNaN(guests)) {
         searchQuery.guests = { $gte: parseInt(guests) };
     }
 
-    // Database search execution pipeline
     const allListings = await Listing.find(searchQuery);
-    
     res.render("listings/index.ejs", { allListings });
 };
 
@@ -45,7 +38,7 @@ module.exports.renderNewForm = (req, res) => {
     res.render("listings/new.ejs");
 };
 
-// 3. Show Controller (Deep Populating Author and Owner Fields)
+// 3. Show Controller
 module.exports.showListing = async (req, res) => {
     let { id } = req.params;
     const listing = await Listing.findById(id)
@@ -64,18 +57,23 @@ module.exports.showListing = async (req, res) => {
     res.render("listings/show.ejs", { listing });
 };
 
-// 4. Create New Resource Pipeline
+// 4. Create New Resource Pipeline (With Strict Fallbacks)
 module.exports.createListing = async (req, res, next) => {
     const geoData = await maptilerClient.geocoding.forward(req.body.listing.location, { limit: 1 });
 
-    let url = req.file.path;
-    let filename = req.file.filename;
+    let url = req.file ? req.file.path : "";
+    let filename = req.file ? req.file.filename : "";
 
     const newListing = new Listing(req.body.listing);
     newListing.owner = req.user._id;
     newListing.image = { url, filename };
 
-    if (geoData.features.length > 0) {
+    // Fallback logic inside controller to guarantee schema consistency
+    if (!newListing.category) {
+        newListing.category = "Trending";
+    }
+
+    if (geoData.features && geoData.features.length > 0) {
         newListing.geometry = geoData.features[0].geometry;
     } else {
         newListing.geometry = { type: 'Point', coordinates: [0, 0] }; 
@@ -105,7 +103,7 @@ module.exports.updateListing = async (req, res) => {
 
     if(req.body.listing.location) {
         const geoData = await maptilerClient.geocoding.forward(req.body.listing.location, { limit: 1 });
-        if (geoData.features.length > 0) {
+        if (geoData.features && geoData.features.length > 0) {
             updateData.geometry = geoData.features[0].geometry;
         }
     }
