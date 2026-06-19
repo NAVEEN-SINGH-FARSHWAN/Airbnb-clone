@@ -17,7 +17,7 @@ body {
 }
 
 /* ==========================================================================
-   2. Header & Navigation Component
+   2. Header & Navigation Component - CLEAN BLACK OVERRIDES (Airbnb Style)
    ========================================================================== */
 .navbar {
     min-height: 5rem;
@@ -29,10 +29,15 @@ body {
     font-size: 2rem;
 }
 
-.nav-link {
-    color: #222222 !important;
+/* 🌟 This specific block forces all links in navbar to be standard black */
+.navbar-nav .nav-link {
+    color: #222222 !important; /* Forces black color, overriding any defaults */
+    font-weight: 500 !important;
 }
 
+.navbar-nav .nav-link:hover {
+    color: #717171 !important; /* Slight grey on hover, standard Airbnb feel */
+}
 /* ==========================================================================
    3. Premium Action Buttons (Airbnb Theme)
    ========================================================================== */

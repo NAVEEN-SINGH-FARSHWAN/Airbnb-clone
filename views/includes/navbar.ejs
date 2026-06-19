@@ -177,15 +177,16 @@
         </form>
       </div>
 
-      <div class="navbar-nav ms-auto align-items-center">
-        <a class="nav-link fw-semibold text-dark me-2" href="/listings/new">Become a host</a>
+     <div class="navbar-nav ms-auto align-items-center">
+        <a class="nav-link text-dark me-2" href="/listings/new">Become a host</a>
         <% if(typeof currUser === 'undefined' || !currUser) { %>
-          <a class="btn btn-outline-secondary btn-sm px-3 rounded-pill me-2 fw-bold" href="/login">Log in</a>
-          <a class="btn btn-dark btn-sm px-3 rounded-pill fw-bold" href="/signup">Sign up</a>
+          <a class="btn btn-outline-secondary btn-sm px-3 rounded-pill me-2 fw-bold text-dark" href="/login">Log in</a>
+          <a class="btn btn-dark btn-sm px-3 rounded-pill fw-bold text-light" href="/signup">Sign up</a>
         <% } %>
         <% if(typeof currUser !== 'undefined' && currUser) { %>
           <a class="btn btn-danger btn-sm px-3 rounded-pill fw-bold" href="/logout">Log out</a>
         <% } %>
+      </div>
       </div>
     </div>
   </div>
