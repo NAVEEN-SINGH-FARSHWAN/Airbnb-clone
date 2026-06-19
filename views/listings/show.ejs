@@ -72,11 +72,11 @@
         <p><b>All Reviews</b></p>
         <div class="row">
             <% for(let review of listing.reviews){ %>
-            <div class="card col-5 ms-3 mb-3 border shadow-sm" style="border-radius: 12px;">
+            <div class="card col-5 ms-3 mb-3 border shadow-sm review-card-box" style="border-radius: 12px; max-width: 100%;">
                 <div class="card-body">
-                    <h5 class="card-title">@<%= review.author.username %></h5>
+                    <h5 class="card-title text-wrap">@<%= review.author ? review.author.username : "anonymous" %></h5>
                     <p class="starability-result card-text" data-rating="<%= review.rating %>"></p>
-                    <p class="card-text mt-2"><%= review.comment %></p>
+                    <p class="card-text mt-2 text-wrap" style="white-space: normal;"><%= review.comment %></p>
                 </div>
                 <% if(currUser && review.author && review.author._id.equals(currUser._id)) { %>
                 <form action="/listings/<%= listing._id %>/reviews/<%= review._id %>?_method=DELETE" class="mb-3 ms-3" method="POST">
@@ -98,17 +98,23 @@
 
 <script>
     const listing = JSON.parse(`<%- JSON.stringify(listing) %>`);
+    
+    // Safety handling parameters layer for fallback coordinates checking
+    const coordinates = (listing.geometry && listing.geometry.coordinates && listing.geometry.coordinates.length === 2) 
+                        ? listing.geometry.coordinates 
+                        : [78.0421, 30.3165]; // Safe explicit region placeholder coordinate fallback 
+
     const mapToken = "brdkecnzeNCGLZ1p8I7s";
 
     const map = new maplibregl.Map({
         container: 'map', 
         style: `https://api.maptiler.com/maps/streets-v2/style.json?key=${mapToken}`, 
-        center: listing.geometry.coordinates, 
+        center: coordinates, 
         zoom: 9 
     });
 
     const marker = new maplibregl.Marker({ color: "#fe424d" }) 
-        .setLngLat(listing.geometry.coordinates)
+        .setLngLat(coordinates)
         .setPopup(new maplibregl.Popup({ offset: 25 })
         .setHTML(`<h5>${listing.title}</h5><p>Exact location provided after booking</p>`))
         .addTo(map);

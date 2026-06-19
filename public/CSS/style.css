@@ -174,7 +174,7 @@ body {
 }
 
 /* ==========================================================================
-   6. Custom Starability Core Fallback Injection (Case-proof Stars)
+   6. Custom Starability Core Fallback Injection
    ========================================================================== */
 .starability-slot {
     display: block;
@@ -237,6 +237,20 @@ body {
 .starability-result[data-rating="3"]::after { width: 60%; }
 .starability-result[data-rating="4"]::after { width: 80%; }
 .starability-result[data-rating="5"]::after { width: 100%; }
+
+/* ==========================================================================
+   8. Production Structural Word-Wrap Layout Patches (Review Text Box Fix)
+   ========================================================================== */
+.review-card-box {
+    word-break: break-word !important;
+    overflow-wrap: break-word !important;
+    white-space: normal !important;
+}
+.review-card-box .card-title {
+    word-wrap: break-word !important;
+    overflow-wrap: break-word !important;
+    white-space: normal !important;
+}
 
 /* ==========================================================================
    7. Advanced Responsive Breakpoints
