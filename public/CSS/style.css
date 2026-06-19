@@ -239,7 +239,7 @@ body {
 .starability-result[data-rating="5"]::after { width: 100%; }
 
 /* ==========================================================================
-   8. Production Structural Word-Wrap Layout Patches (Review Text Box Fix)
+   7. Production Structural Word-Wrap Layout Patches (Review Text Box Fix)
    ========================================================================== */
 .review-card-box {
     word-break: break-word !important;
@@ -253,7 +253,46 @@ body {
 }
 
 /* ==========================================================================
-   7. Advanced Responsive Breakpoints
+   8. Airbnb Styling & Theme Colour Overrides
+   ========================================================================== */
+.premium-title-black {
+    color: #222222 !important;
+    font-weight: 700 !important;
+    font-size: 1.8rem;
+}
+.premium-owner-black {
+    color: #222222 !important;
+    font-weight: 700 !important;
+}
+.premium-text-light-black {
+    color: #5a5a5a !important; /* Elegant slate grey format */
+}
+.btn-review-submit {
+    background-color: #222222 !important;
+    color: #ffffff !important;
+    border: 1px solid #222222 !important;
+    font-weight: 600 !important;
+    transition: all 0.2s ease-in-out !important;
+}
+.btn-review-submit:hover {
+    background-color: #004b87 !important; /* Blue on hover state */
+    color: #ffffff !important;
+    border-color: #004b87 !important;
+}
+.btn-green-submit {
+    background: linear-gradient(135deg, #2ea44f 0%, #238636 100%) !important;
+    color: #ffffff !important;
+    font-weight: 700 !important;
+    border: none !important;
+    border-radius: 8px !important;
+    transition: all 0.2s ease-in-out !important;
+}
+.btn-green-submit:hover {
+    background: linear-gradient(135deg, #2c974b 0%, #1e6d2f 100%) !important;
+}
+
+/* ==========================================================================
+   9. Advanced Responsive Breakpoints
    ========================================================================== */
 
 /* Laptop / Tablets Layout (3 Columns) */

@@ -3,25 +3,25 @@
 <link href="https://unpkg.com/maplibre-gl@latest/dist/maplibre-gl.css" rel="stylesheet" />
 <script src="https://unpkg.com/maplibre-gl@latest/dist/maplibre-gl.js"></script>
 
-<div class="row mt-3">
-    <div class="col-8 offset-3">
-        <h3><%= listing.title %></h3>
+<div class="row mt-3 px-2 px-md-0">
+    <div class="col-12 col-md-8 offset-md-3">
+        <h3 class="premium-title-black"><%= listing.title %></h3>
     </div>
     
-    <div class="card col-6 offset-3 show-card listing-card border-0">
-        <img src="<%= listing.image.url %>" class="card-img-top show-img" alt="listing_image">
+    <div class="card col-12 col-md-6 offset-md-3 show-card listing-card border-0 mt-2">
+        <img src="<%= listing.image.url %>" class="card-img-top show-img shadow-sm" alt="listing_image">
         <div class="card-body px-0">
-            <p class="card-text"> <i>Owned by: <%= listing.owner?.username %></i> </p>
-            <p class="card-text"> <%= listing.description %> </p>
-            <p class="card-text"> &#8377;<%= listing.price.toLocaleString("en-IN") %> / night</p>
-            <p class="card-text"> <%= listing.location %></p>
-            <p class="card-text"> <%= listing.country %></p>
+            <p class="card-text premium-owner-black"> <i>Owned by: <%= listing.owner?.username %></i> </p>
+            <p class="card-text premium-text-light-black"> <%= listing.description %> </p>
+            <p class="card-text premium-text-light-black fw-semibold text-dark"> &#8377;<%= listing.price.toLocaleString("en-IN") %> / night</p>
+            <p class="card-text premium-text-light-black"> <i class="fas fa-map-marker-alt text-danger me-1"></i> <%= listing.location %></p>
+            <p class="card-text premium-text-light-black"> <%= listing.country %></p>
         </div>
     </div>
     <br>
 
     <% if(currUser && listing.owner && listing.owner._id.equals(currUser._id)){ %>
-    <div class="row col-6 offset-3 mb-3 d-flex align-items-center gap-2">
+    <div class="row col-12 col-md-6 offset-md-3 mb-3 d-flex align-items-center gap-2">
         <div class="col-auto p-0">
             <a href="/listings/<%= listing._id %>/edit" class="btn btn-stylish-edit px-4 py-2">
                 <i class="fas fa-edit me-1"></i> Edit
@@ -37,13 +37,13 @@
     </div> 
     <% } %>
 
-    <div class="col-8 offset-3 mb-3">
+    <div class="col-12 col-md-8 offset-md-3 mb-3">
         <hr>
         <% if(currUser){ %>
-        <h4>Leave a Review</h4>
+        <h4 class="fw-bold text-dark">Leave a Review</h4>
         <form action="/listings/<%= listing.id %>/reviews" method="POST" novalidate class="needs-validation">
             <div class="mb-3 mt-3">
-                <label for="rating" class="form-label">Rating</label>
+                <label for="rating" class="form-label fw-semibold">Rating</label>
                 <fieldset class="starability-slot">
                   <input type="radio" id="no-rate" class="input-no-rate" name="review[rating]" value="1" checked aria-label="No rating." />
                   <input type="radio" id="first-rate1" name="review[rating]" value="1" />
@@ -59,24 +59,24 @@
                 </fieldset>
             </div>
             <div class="mb-3 mt-3">
-                <label for="comment" class="form-label">Comments</label>
-                <textarea name="review[comment]" class="form-control" id="comment" cols="30" rows="5" required></textarea>
+                <label for="comment" class="form-label fw-semibold">Comments</label>
+                <textarea name="review[comment]" class="form-control" id="comment" cols="30" rows="4" placeholder="Write down your experience parameters..." required></textarea>
                 <div class="invalid-feedback">Please add some comments for review</div>
             </div>
-            <button class="btn btn-outline-dark">Submit</button>
+            <button class="btn btn-review-submit px-4 py-2 rounded-2">Submit</button>
         </form>
         <hr>
         <% } %>
 
         <% if(listing.reviews.length > 0) { %>
-        <p><b>All Reviews</b></p>
-        <div class="row">
+        <p class="fw-bold text-dark mb-3">All Reviews</p>
+        <div class="row m-0 g-3">
             <% for(let review of listing.reviews){ %>
-            <div class="card col-5 ms-3 mb-3 border shadow-sm review-card-box" style="border-radius: 12px; max-width: 100%;">
+            <div class="card col-12 col-md-5 ms-0 me-md-3 mb-3 border shadow-sm review-card-box" style="border-radius: 12px;">
                 <div class="card-body">
-                    <h5 class="card-title text-wrap">@<%= review.author ? review.author.username : "anonymous" %></h5>
+                    <h5 class="card-title text-wrap fw-bold text-dark">@<%= review.author ? review.author.username : "anonymous" %></h5>
                     <p class="starability-result card-text" data-rating="<%= review.rating %>"></p>
-                    <p class="card-text mt-2 text-wrap" style="white-space: normal;"><%= review.comment %></p>
+                    <p class="card-text mt-2 text-wrap premium-text-light-black" style="white-space: normal;"><%= review.comment %></p>
                 </div>
                 <% if(currUser && review.author && review.author._id.equals(currUser._id)) { %>
                 <form action="/listings/<%= listing._id %>/reviews/<%= review._id %>?_method=DELETE" class="mb-3 ms-3" method="POST">
@@ -89,20 +89,19 @@
         <% } %>
     </div>
 
-    <div class="col-8 offset-3 mb-3">
+    <div class="col-12 col-md-8 offset-md-3 mb-3">
         <hr>
-        <h3>Where you'll be</h3>
-        <div id="map" style="width: 100%; height: 400px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);"></div>
+        <h3 class="fw-bold text-dark">Where you'll be</h3>
+        <div id="map" class="mt-3" style="width: 100%; height: 400px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);"></div>
     </div>
 </div>
 
 <script>
     const listing = JSON.parse(`<%- JSON.stringify(listing) %>`);
     
-    // Safety handling parameters layer for fallback coordinates checking
     const coordinates = (listing.geometry && listing.geometry.coordinates && listing.geometry.coordinates.length === 2) 
                         ? listing.geometry.coordinates 
-                        : [78.0421, 30.3165]; // Safe explicit region placeholder coordinate fallback 
+                        : [78.0421, 30.3165]; 
 
     const mapToken = "brdkecnzeNCGLZ1p8I7s";
 

@@ -1,8 +1,8 @@
 <% layout("layouts/boilerplate") -%>
 
-<div class="row mt-3">
-    <div class="col-8 offset-2">
-        <h3 class="mb-3 fw-bold">Create a New Listing</h3>
+<div class="row mt-3 px-2 px-md-0">
+    <div class="col-12 col-md-8 offset-md-2">
+        <h3 class="mb-3 fw-bold text-dark">Create a New Listing</h3>
         
         <form method="POST" action="/listings" novalidate class="needs-validation" enctype="multipart/form-data">
             
@@ -71,7 +71,7 @@
                 <div class="invalid-feedback">A high-quality imagery upload is mandatory for listings.</div>
             </div>
             
-            <button class="btn btn-dark add-btn mt-1 px-5 py-2 fw-bold text-uppercase shadow-sm" style="border-radius:8px;">
+            <button class="btn btn-green-submit mt-1 px-5 py-2 fw-bold text-uppercase shadow-sm" style="border-radius:8px;">
                 Create Listing Hook
             </button>
             
