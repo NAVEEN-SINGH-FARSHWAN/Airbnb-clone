@@ -174,8 +174,17 @@ body {
     filter: drop-shadow(0px 1px 3px rgba(0,0,0,0.6));
 }
 
-.listing-link {
-    text-decoration: none !important;
+/* 🌟 RESET BLUE LINKS ON HOME PAGE */
+.listing-link, 
+.listing-link:hover, 
+.listing-link:visited {
+    color: #222222 !important; /* Soft premium black */
+    text-decoration: none !important; /* No under-lines */
+}
+
+.responsive-title {
+    color: #222222 !important;
+    font-weight: 600 !important;
 }
 
 /* ==========================================================================
@@ -294,6 +303,17 @@ body {
 }
 .btn-green-submit:hover {
     background: linear-gradient(135deg, #2c974b 0%, #1e6d2f 100%) !important;
+}
+
+/* 🌟 RESET RED TAX INFO STRINGS TO SLATE GREY */
+.tax-info.tax-inline-info {
+    color: #717171 !important; 
+    font-weight: 400 !important;
+    font-style: normal !important; 
+}
+
+.location-country-text {
+    color: #717171 !important;
 }
 
 /* ==========================================================================
