@@ -2,7 +2,6 @@ if(process.env.NODE_ENV!="production"){
 require('dotenv').config();
 }
 
-
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
@@ -21,9 +20,6 @@ const { isLoggedIn, saveRedirectUrl } = require("./middleware.js");
 const listingRouter = require("./routes/listing.js")
 const reviewsRouter = require("./routes/review.js")
 const userRouter = require("./routes/user.js")
-
-
-
 
 const dbUrl = process.env.ATLASDB_URL;
 
@@ -44,12 +40,10 @@ app.use(methodOverride("_method"));
 app.engine("ejs", ejsMate);
 app.use(express.static(path.join(__dirname, "public")));
 
-
 const store = MongoStore.create({
     mongoUrl:dbUrl,
     crypto:{
         secret: process.env.SECRET
-
     },
     touchAfter:24 * 3600,
 });
@@ -57,7 +51,6 @@ const store = MongoStore.create({
 store.on("error",(err)=>{
    console.log("ERROR in MONGO SESSION STORE",err);
 });
-
 
 const sessionOptions = {
     store,
@@ -81,7 +74,6 @@ passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
-
 app.use((req,res,next)=>{
     res.locals.success = req.flash("success");
     res.locals.error = req.flash("error");
@@ -89,30 +81,47 @@ app.use((req,res,next)=>{
     next();
 });
 
+// 🛠️ EMERGENCY PRODUCTION DATA SEEDING ROUTE (Bypasses Local ISP Blocks)
+const Listing = require("./models/listing.js");
+const initData = require("./init/data.js");
+
+app.get("/system-db-seed-secure", async (req, res) => {
+    try {
+        // 1. Purana data clear karo
+        await Listing.deleteMany({});
+        
+        // 2. Map lagakar real user id assign karo
+        initData.data = initData.data.map((obj) => ({
+            ...obj,
+            owner: "6a1976ad6d6f55bd8cb7095d" // Aapki active owner ID mapping
+        }));
+        
+        // 3. Cloud MongoDB me documents write karo
+        await Listing.insertMany(initData.data);
+        res.send("<h1>🎉 SUCCESS: Cloud Database Seeding Completed Smoothly!</h1><p>Ab aap normal routes check kar sakte hain.</p>");
+    } catch(err) {
+        res.status(500).send("Seeding Failed: " + err.message);
+    }
+});
 
 // 8. Root Route
 app.get("/", (req, res) => {
     res.redirect('/listings');
 });
 
-
 app.use("/listings",listingRouter);
 app.use("/listings/:id/reviews",reviewsRouter);
 app.use("/",userRouter);
-
-
-
-
 
 //9. 404 Route
 app.all("*any", (req, res, next) => {
     next(new ExpressError(404, "Page Not Found!"));
 });
+
 // 10. Error Handling Middleware
 app.use((err, req, res, next) => {
     let { statusCode = 500, message = "something went wrong!" } = err;
     
-    // Error page ke liye res.locals ko safe kiya taaki navbar aur flash crash na ho
     res.locals.success = req.flash("success") || [];
     res.locals.error = req.flash("error") || [];
     res.locals.currUser = req.user || null;
