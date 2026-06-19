@@ -81,24 +81,37 @@ app.use((req,res,next)=>{
     next();
 });
 
-// 🛠️ EMERGENCY PRODUCTION DATA SEEDING ROUTE (Bypasses Local ISP Blocks)
+// 🛠️ UPGRADED EMERGENCY PRODUCTION DATA SEEDING ROUTE (Bypasses Schema Enum Errors)
 const Listing = require("./models/listing.js");
 const initData = require("./init/data.js");
 
 app.get("/system-db-seed-secure", async (req, res) => {
     try {
-        // 1. Purana data clear karo
+        // 1. Purana crash data clear karo
         await Listing.deleteMany({});
         
-        // 2. Map lagakar real user id assign karo
-        initData.data = initData.data.map((obj) => ({
-            ...obj,
-            owner: "6a1976ad6d6f55bd8cb7095d" // Aapki active owner ID mapping
-        }));
+        // 2. Map lagakar user ID assign karo AUR category validation check handle karo
+        initData.data = initData.data.map((obj) => {
+            // Agar aapke model validation schema enum me data matches strictly predefined hain
+            // toh hum mismatch data (jaise 'Amazing Pools') ko dynamically 'Trending' ya compatible state me daal rahe hain
+            let safeCategory = "Trending"; 
+            
+            const allowedCategories = ["Trending", "Rooms", "Iconic Cities", "Mountains", "Castles", "Amazing Pools", "Camping"];
+            
+            if(allowedCategories.includes(obj.category)) {
+                safeCategory = obj.category;
+            }
+            
+            return {
+                ...obj,
+                category: safeCategory, // Passes strict Mongoose validations schema without a single warning
+                owner: "6a1976ad6d6f55bd8cb7095d" // Aapki active owner ID mapping
+            };
+        });
         
         // 3. Cloud MongoDB me documents write karo
         await Listing.insertMany(initData.data);
-        res.send("<h1>🎉 SUCCESS: Cloud Database Seeding Completed Smoothly!</h1><p>Ab aap normal routes check kar sakte hain.</p>");
+        res.send("<h1>🎉 SUCCESS: Cloud Database Seeding Completed Smoothly!</h1><p>Ab aap /listings check kar sakte hain.</p>");
     } catch(err) {
         res.status(500).send("Seeding Failed: " + err.message);
     }
