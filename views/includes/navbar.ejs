@@ -1,77 +1,229 @@
 <style>
-  .search-btn{
+  .search-btn {
     background-color: #fe424d;
-    color:#ffffff;
+    color: #ffffff;
     border-radius: 25px;
-    padding: 0 1rem 0 1rem;
-    }
-
-    .search-btn:hover{
-    background-color: #fe424d;
-    color:#ffffff;
-    }
-    .search-btn i{
-      display: inline;
-      margin-right: 0.5rem;
-    }
-    .search-inp{
-    border-radius: 25px;
-    padding: 0.5rem 3rem 0.5rem 3rem;
-    font-size: 1rem;
-
-    }
-
+    padding: 0.5rem 1.5rem;
+    border: none;
+    transition: 0.2s ease-in-out;
+  }
+  .search-btn:hover {
+    background-color: #e33640;
+    color: #ffffff;
+  }
+  .search-inp {
+    border-radius: 20px;
+    padding: 0.5rem 1rem;
+    border: 1px solid #ced4da;
+    width: 100%;
+  }
+  /* Premium Airbnb Multi-Filter Dynamic Wrapper Style */
+  .premium-search-bar-wrapper {
+    background: #ffffff;
+    border: 1px solid #ebebeb;
+    border-radius: 32px;
+    box-shadow: 0px 1px 2px rgba(0,0,0,0.08), 0px 4px 12px rgba(0,0,0,0.05);
+    padding: 4px 8px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    transition: box-shadow 0.2s;
+  }
+  .premium-search-bar-wrapper:hover {
+    box-shadow: 0px 2px 4px rgba(0,0,0,0.18);
+  }
+  .search-segment {
+    padding: 2px 16px;
+    border-right: 1px solid #dddddd;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: #222222;
+  }
+  .search-segment.last-segment {
+    border-right: none;
+    color: #717171;
+  }
+  .search-circle-icon {
+    background: #fe424d;
+    color: #fff;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 8px;
+  }
+  /* Hidden Dynamic Modal Overlay Panel Layout */
+  .expanded-search-panel {
+    display: none;
+    position: absolute;
+    top: 70px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    max-width: 750px;
+    background: #ffffff;
+    border: 1px solid #dddddd;
+    border-radius: 36px;
+    box-shadow: 0 16px 32px rgba(0,0,0,0.15);
+    padding: 16px 32px;
+    z-index: 1000;
+  }
+  .expanded-search-panel.active {
+    display: block;
+  }
+  .guest-counter-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px solid #f0f0f0;
+  }
+  .counter-controls button {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 1px solid #b0b0b0;
+    background: #fff;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  .counter-controls span {
+    display: inline-block;
+    width: 30px;
+    text-align: center;
+    font-weight: 600;
+  }
 </style>
 
-
-
-<nav class="navbar navbar-expand-md bg-body-light border-bottom sticky-top">
+<nav class="navbar navbar-expand-md bg-body-light border-bottom sticky-top shadow-sm py-2">
   <div class="container-fluid">
-    <a class="navbar-brand" href="/listings"><i class="fa-solid fa-compass"></i></a>
-    <button
-      class="navbar-toggler"
-      type="button"
-      data-bs-toggle="collapse"
-      data-bs-target="#navbarNavAltMarkup"
-    >
+    <a class="navbar-brand text-danger fs-3 ms-2" href="/listings">
+      <i class="fa-solid fa-compass"></i>
+    </a>
+    
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup">
       <span class="navbar-toggler-icon"></span>
     </button>
+    
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-      <div class="navbar-nav">
-       
-        <a class="nav-link" href="/listings">Explore</a>
-
+      <div class="navbar-nav me-auto">
+        <a class="nav-link fw-semibold text-dark" href="/listings">Explore</a>
       </div>
 
-      <!-- <div class="navbar-nav ms-auto">
-      <form class="d-flex">
-      <input class="form-control me-2 search-inp" type="search" placeholder="Search destinations">
-      <button class="btn search-btn" type="submit"><i class="fa-solid fa-magnifying-glass"></i>Search</button>
-      </form>
-      </div> -->
-
-      <div class="navbar-nav ms-auto search-container me-3">
-         <form class="d-flex role-search" action="/listings/search" method="GET">
-           <input class="form-control search-inp" type="search" name="location" placeholder="Search destinations" aria-label="Search" required>
-           <button class="btn search-btn" type="submit">
-             <i class="fa-solid fa-magnifying-glass"></i><span class="search-text-desktop">Search</span>
-           </button>
-         </form>
+      <div class="navbar-nav mx-auto search-container" id="searchBarTrigger">
+        <div class="premium-search-bar-wrapper">
+          <div class="search-segment">Anywhere</div>
+          <div class="search-segment">Any week</div>
+          <div class="search-segment last-segment">Add guests</div>
+          <div class="search-circle-icon">
+            <i class="fa-solid fa-magnifying-glass fs-6"></i>
+          </div>
+        </div>
       </div>
 
-      <div class="navbar-nav ms-auto">
-        <a class="nav-link" href="/listings/new">Become a host</a>
-       <%if(typeof currUser === 'undefined' || !currUser){%>
-        <a class="nav-link" href="/signup"> <b>Sign up</b> </a>
-        <a class="nav-link" href="/login"> <b>Log in</b> </a>
-        <%}%>
-        <%if(typeof currUser !== 'undefined' && currUser){%>
-          <a class="nav-link" href="/logout"><b>Log out</b></a>
-         <%}%>
-       
+      <div class="expanded-search-panel" id="expandedSearchPanel">
+        <form action="/listings/search" method="GET" class="row g-3 align-items-center">
+          <div class="col-md-5">
+            <label class="form-label fw-bold text-dark small mb-1">Where</label>
+            <input class="form-control search-inp" type="search" name="location" placeholder="Search destinations (e.g. Varanasi, Noida)" aria-label="Location">
+          </div>
+          
+          <div class="col-md-4">
+            <label class="form-label fw-bold text-dark small mb-1">When</label>
+            <input class="form-control search-inp" type="text" placeholder="Anytime / Dates picker" onfocus="(this.type='date')" onblur="(this.type='text')">
+          </div>
+
+          <div class="col-md-3">
+            <label class="form-label fw-bold text-dark small mb-1">Who</label>
+            <div class="dropdown">
+              <button class="btn btn-outline-secondary w-100 text-start dropdown-toggle search-inp" type="button" id="guestDropdownMenu" data-bs-toggle="dropdown" aria-expanded="false" style="border-radius:20px;">
+                <span id="guestCountDisplay">1 guest</span>
+              </button>
+              <div class="dropdown-menu p-3" aria-labelledby="guestDropdownMenu" style="width: 250px; border-radius: 16px;">
+                <div class="guest-counter-row">
+                  <div>
+                    <div class="fw-bold small">Adults</div>
+                    <div class="text-muted extra-small" style="font-size:0.75rem;">Ages 13 or above</div>
+                  </div>
+                  <div class="counter-controls">
+                    <button type="button" id="btnAdultMinus">-</button>
+                    <span id="lblAdultCount">1</span>
+                    <button type="button" id="btnAdultPlus">+</button>
+                  </div>
+                </div>
+                <div class="guest-counter-row border-0">
+                  <div>
+                    <div class="fw-bold small">Children</div>
+                    <div class="text-muted" style="font-size:0.75rem;">Ages 2–12</div>
+                  </div>
+                  <div class="counter-controls">
+                    <button type="button" id="btnChildMinus">-</button>
+                    <span id="lblChildCount">0</span>
+                    <button type="button" id="btnChildPlus">+</button>
+                  </div>
+                </div>
+                <input type="hidden" name="guests" id="hiddenGuestsInput" value="1">
+              </div>
+            </div>
+          </div>
+
+          <div class="col-12 text-end mt-3 pt-2 border-top">
+            <button class="btn search-btn px-4 fw-bold" type="submit">
+              <i class="fa-solid fa-magnifying-glass me-2"></i>Search Destination
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <div class="navbar-nav ms-auto align-items-center">
+        <a class="nav-link fw-semibold text-dark me-2" href="/listings/new">Become a host</a>
+        <% if(typeof currUser === 'undefined' || !currUser) { %>
+          <a class="btn btn-outline-secondary btn-sm px-3 rounded-pill me-2 fw-bold" href="/login">Log in</a>
+          <a class="btn btn-dark btn-sm px-3 rounded-pill fw-bold" href="/signup">Sign up</a>
+        <% } %>
+        <% if(typeof currUser !== 'undefined' && currUser) { %>
+          <a class="btn btn-danger btn-sm px-3 rounded-pill fw-bold" href="/logout">Log out</a>
+        <% } %>
       </div>
     </div>
   </div>
 </nav>
 
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const trigger = document.getElementById("searchBarTrigger");
+    const panel = document.getElementById("expandedSearchPanel");
+    
+    // Toggle main search pane collapse state layer
+    trigger.addEventListener("click", (e) => {
+      e.stopPropagation();
+      panel.classList.toggle("active");
+    });
+    
+    document.addEventListener("click", (e) => {
+      if (!panel.contains(e.target) && !trigger.contains(e.target)) {
+        panel.classList.remove("active");
+      }
+    });
 
+    // Dynamic Counter Buttons Calculations Logic
+    let adults = 1;
+    let children = 0;
+    
+    const inputHidden = document.getElementById("hiddenGuestsInput");
+    const displaySpan = document.getElementById("guestCountDisplay");
+
+    function updateUiState() {
+      let total = adults + children;
+      inputHidden.value = total;
+      displaySpan.innerText = `${total} guest${total > 1 ? 's' : ''}`;
+    }
+
+    document.getElementById("btnAdultPlus").addEventListener("click", (e) => { e.stopPropagation(); adults++; document.getElementById("lblAdultCount").innerText = adults; updateUiState(); });
+    document.getElementById("btnAdultMinus").addEventListener("click", (e) => { e.stopPropagation(); if(adults > 1) { adults--; document.getElementById("lblAdultCount").innerText = adults; updateUiState(); } });
+    document.getElementById("btnChildPlus").addEventListener("click", (e) => { e.stopPropagation(); children++; document.getElementById("lblChildCount").innerText = children; updateUiState(); });
+    document.getElementById("btnChildMinus").addEventListener("click", (e) => { e.stopPropagation(); if(children > 0) { children--; document.getElementById("lblChildCount").innerText = children; updateUiState(); } });
+  });
+</script>

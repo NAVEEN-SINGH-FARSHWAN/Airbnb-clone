@@ -1,11 +1,119 @@
 <% layout("layouts/boilerplate") -%>
 
+<style>
+  /* Premium Airbnb Icon Filter Strip Layout styling */
+  .filters-scroller-container {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    overflow-x: auto;
+    padding: 1rem 0.5rem;
+    margin-bottom: 1.5rem;
+    scrollbar-width: none; /* Firefox */
+  }
+  .filters-scroller-container::-webkit-scrollbar {
+    display: none; /* Safari and Chrome */
+  }
+  .filter-icon-box {
+    text-align: center;
+    opacity: 0.65;
+    cursor: pointer;
+    text-decoration: none;
+    color: #222222 !important;
+    transition: 0.2s ease-in-out;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 60px;
+  }
+  .filter-icon-box i {
+    font-size: 1.4rem;
+    margin-bottom: 0.4rem;
+  }
+  .filter-icon-box span {
+    font-size: 0.75rem;
+    font-weight: 500;
+    white-space: nowrap;
+  }
+  .filter-icon-box:hover {
+    opacity: 1;
+    border-bottom: 2px solid #b0b0b0;
+    padding-bottom: 2px;
+  }
+  .filter-icon-box.active-filter {
+    opacity: 1;
+    border-bottom: 2px solid #222222;
+    padding-bottom: 2px;
+    font-weight: bold;
+  }
+  
+  /* Layout Fallback Grid Safety layer styling */
+  .no-listings-found {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 4rem 2rem;
+    background: #f7f7f7;
+    border-radius: 16px;
+    color: #717171;
+  }
+</style>
+
+<div class="filters-scroller-container">
+  <a href="/listings" class="filter-icon-box" id="f-all">
+    <i class="fa-solid fa-globe"></i>
+    <span>All Packs</span>
+  </a>
+  <a href="/listings?category=Trending" class="filter-icon-box" id="f-trending">
+    <i class="fa-solid fa-fire"></i>
+    <span>Trending</span>
+  </a>
+  <a href="/listings?category=Rooms" class="filter-icon-box" id="f-rooms">
+    <i class="fa-solid fa-bed"></i>
+    <span>Rooms</span>
+  </a>
+  <a href="/listings?category=Iconic Cities" class="filter-icon-box" id="f-cities">
+    <i class="fa-solid fa-mountain-city"></i>
+    <span>Iconic Cities</span>
+  </a>
+  <a href="/listings?category=Mountains" class="filter-icon-box" id="f-mountains">
+    <i class="fa-solid fa-mountain"></i>
+    <span>Mountains</span>
+  </a>
+  <a href="/listings?category=Castles" class="filter-icon-box" id="f-castles">
+    <i class="fa-solid fa-fort-awesome"></i>
+    <span>Castles</span>
+  </a>
+  <a href="/listings?category=Amazing Pools" class="filter-icon-box" id="f-pools">
+    <i class="fa-solid fa-water"></i>
+    <span>Pools</span>
+  </a>
+  <a href="/listings?category=Camping" class="filter-icon-box" id="f-camping">
+    <i class="fa-solid fa-tent"></i>
+    <span>Camping</span>
+  </a>
+  <a href="/listings?category=Farms" class="filter-icon-box" id="f-farms">
+    <i class="fa-solid fa-cow"></i>
+    <span>Farms</span>
+  </a>
+  <a href="/listings?category=Arctic" class="filter-icon-box" id="f-arctic">
+    <i class="fa-solid fa-snowflake"></i>
+    <span>Arctic</span>
+  </a>
+  <a href="/listings?category=Domes" class="filter-icon-box" id="f-domes">
+    <i class="fa-solid fa-igloo"></i>
+    <span>Domes</span>
+  </a>
+</div>
+
 <div class="airbnb-custom-grid">
     <% if(allListings.length === 0) { %>
       <div class="no-listings-found">
-        <h4>No destination found for this filter!</h4>
+        <i class="fa-regular fa-folder-open fs-1 mb-3 text-muted"></i>
+        <h4>No destination found for this filter selection!</h4>
+        <p class="small text-muted mt-1">Ek baar kisi doosri category ko check karke dekhein.</p>
       </div>
     <% } %>
+    
     <% for(let listing of allListings) { %>
       <div class="airbnb-custom-col">
         <a href="/listings/<%= listing._id %>" class="listing-link">
@@ -38,3 +146,21 @@
       </div> 
     <% } %>
 </div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const activeCategory = urlParams.get('category');
+    
+    if (activeCategory) {
+      const links = document.querySelectorAll(".filter-icon-box");
+      links.forEach(link => {
+        if(link.getAttribute("href").includes(activeCategory)) {
+          link.classList.add("active-filter");
+        }
+      });
+    } else {
+      document.getElementById("f-all").classList.add("active-filter");
+    }
+  });
+</script>

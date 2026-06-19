@@ -1,5 +1,4 @@
 const Listing = require("../models/listing");
-// MapTiler client import
 const maptilerClient = require('@maptiler/client');
 maptilerClient.config.apiKey = process.env.MAPTILER_API_KEY;
 
@@ -14,16 +13,31 @@ module.exports.index = async (req, res) => {
     res.render("listings/index.ejs", { allListings });
 };
 
-// 2. Search Engine Controller
+// 2. Advanced Multi-Modal Search Engine Controller
 module.exports.searchListings = async (req, res) => {
-    let { location } = req.query;
-    if (!location) {
-        return res.redirect("/listings");
+    let { location, category, guests } = req.query;
+    
+    // Dynamic Query Bundle Compose karein
+    let searchQuery = {};
+
+    // A. Location Search Logic (Case-insensitive dynamic filtering)
+    if (location && location.trim() !== "") {
+        searchQuery.location = { $regex: location.trim(), $options: "i" };
     }
-    // Case-insensitive regex integration to search matching destinations
-    const allListings = await Listing.find({ 
-        location: { $regex: location, $options: "i" } 
-    });
+
+    // B. Category Logic Linkage (Agar category filter clicked hai)
+    if (category && category.trim() !== "") {
+        searchQuery.category = category;
+    }
+
+    // C. Guests Capabilities Mapping (Find listings that can accommodate >= requested guests)
+    if (guests && !isNaN(guests)) {
+        searchQuery.guests = { $gte: parseInt(guests) };
+    }
+
+    // Database search execution pipeline
+    const allListings = await Listing.find(searchQuery);
+    
     res.render("listings/index.ejs", { allListings });
 };
 
@@ -84,14 +98,11 @@ module.exports.renderEditForm = async (req, res) => {
     res.render("listings/edit.ejs", { listing, originalImageUrl });
 };
 
-// 5. UPGRADED UPDATE PIPELINE (Strict Checking Enabled)
+// 5. Update Pipeline
 module.exports.updateListing = async (req, res) => {
     let { id } = req.params;
-
-    // A. Pehle update bundle fetch aur query parameters extract karo
     let updateData = { ...req.body.listing };
 
-    // B. Geospatial API Sync: Agar location badli hai toh fresh coordinates nikaalo
     if(req.body.listing.location) {
         const geoData = await maptilerClient.geocoding.forward(req.body.listing.location, { limit: 1 });
         if (geoData.features.length > 0) {
@@ -99,10 +110,8 @@ module.exports.updateListing = async (req, res) => {
         }
     }
 
-    // C. Mongoose findByIdAndUpdate logic run karo explicitly pass karke
     let listing = await Listing.findByIdAndUpdate(id, updateData, { runValidators: true, new: true });
 
-    // D. Multi-part handling: Agar user ne nayi photo select ki hai
     if (typeof req.file !== "undefined") {
         let url = req.file.path;
         let filename = req.file.filename;
@@ -116,7 +125,7 @@ module.exports.updateListing = async (req, res) => {
 
 module.exports.destroyListing = async (req, res) => {
     let { id } = req.params;
-    let deletedListing = await Listing.findByIdAndDelete(id);
+    await Listing.findByIdAndDelete(id);
     req.flash("success", "Listing deleted!");
     res.redirect("/listings");
 };

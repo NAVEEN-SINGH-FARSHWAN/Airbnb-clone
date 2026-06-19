@@ -2,37 +2,38 @@
 
 <div class="row mt-3">
     <div class="col-8 offset-2">
-        <h3>Create a New Listing</h3>
+        <h3 class="mb-3 fw-bold">Create a New Listing</h3>
         
         <form method="POST" action="/listings" novalidate class="needs-validation" enctype="multipart/form-data">
             
             <div class="mb-3">
-                <label for="title" class="form-label">Title</label>
+                <label for="title" class="form-label fw-semibold">Title</label>
                 <input type="text" name="listing[title]" placeholder="Add a catchy title" class="form-control" required/>
                 <div class="valid-feedback">Title Looks Good!</div>
+                <div class="invalid-feedback">Please enter a valid catchy title.</div>
             </div>
 
             <div class="mb-3">
-                <label for="description" class="form-label">Description</label>
-                <textarea name="listing[description]" class="form-control" placeholder="Describe your place..." required></textarea>
-                <div class="invalid-feedback">Please enter short description</div>
+                <label for="description" class="form-label fw-semibold">Description</label>
+                <textarea name="listing[description]" class="form-control" placeholder="Describe the luxury, spacing, and vibes of your place..." rows="4" required></textarea>
+                <div class="invalid-feedback">Please enter a short descriptive overview.</div>
             </div>
             
             <div class="row">
                 <div class="mb-3 col-md-4">
-                    <label for="price" class="form-label">Price</label>
-                    <input type="number" name="listing[price]" placeholder="1200" class="form-control" required/>
-                    <div class="invalid-feedback">Price should be valid</div>
+                    <label for="price" class="form-label fw-semibold">Price per night</label>
+                    <input type="number" name="listing[price]" placeholder="1200" class="form-control" min="1" required/>
+                    <div class="invalid-feedback">Price should be a valid positive amount.</div>
                 </div>
                  
                 <div class="mb-3 col-md-4">
-                    <label for="country" class="form-label">Country</label>
+                    <label for="country" class="form-label fw-semibold">Country</label>
                     <input type="text" name="listing[country]" placeholder="India" class="form-control" required/>
-                    <div class="invalid-feedback">Country name should be valid name</div>
+                    <div class="invalid-feedback">Country field requires a valid destination territory.</div>
                 </div>
 
                 <div class="mb-3 col-md-4">
-                    <label for="category" class="form-label">Category</label>
+                    <label for="category" class="form-label fw-semibold">Category</label>
                     <select name="listing[category]" class="form-select" required>
                         <option value="">Select Category</option>
                         <option value="Trending">Trending</option>
@@ -42,24 +43,37 @@
                         <option value="Castles">Castles</option>
                         <option value="Amazing Pools">Amazing Pools</option>
                         <option value="Camping">Camping</option>
+                        <option value="Farms">Farms</option>
+                        <option value="Arctic">Arctic</option>
+                        <option value="Domes">Domes</option>
                     </select>
-                    <div class="invalid-feedback">Please select a category</div>
+                    <div class="invalid-feedback">Please select an appropriate category type.</div>
                 </div>
             </div>
 
-            <div class="mb-3">
-                <label for="image" class="form-label">Upload Listing Image</label>
+            <div class="row">
+                <div class="mb-3 col-md-6">
+                    <label for="location" class="form-label fw-semibold">Location</label>
+                    <input type="text" name="listing[location]" placeholder="Jaipur, Rajasthan" class="form-control" required/>
+                    <div class="invalid-feedback">Location should be a specific valid address tracker.</div>
+                </div>
+
+                <div class="mb-3 col-md-6">
+                    <label for="guests" class="form-label fw-semibold">Maximum Allowed Guests</label>
+                    <input type="number" name="listing[guests]" placeholder="2" class="form-control" min="1" max="16" defaultValue="2" required/>
+                    <div class="invalid-feedback">Please specify the capacity threshold limit (min: 1).</div>
+                </div>
+            </div>
+
+            <div class="mb-4">
+                <label for="image" class="form-label fw-semibold">Upload Premium Showcase Image</label>
                 <input type="file" name="listing[image]" class="form-control" required />
-                <div class="invalid-feedback">Please upload a valid image</div>
+                <div class="invalid-feedback">A high-quality imagery upload is mandatory for listings.</div>
             </div>
             
-            <div class="mb-3">
-                <label for="location" class="form-label">Location</label>
-                <input type="text" name="listing[location]" placeholder="Jaipur, Rajasthan" class="form-control" required/>
-                <div class="invalid-feedback">Location should be valid</div>
-            </div>
-            
-            <button class="btn btn-dark add-btn mt-2 px-4 py-2">Add Listing</button>
+            <button class="btn btn-dark add-btn mt-1 px-5 py-2 fw-bold text-uppercase shadow-sm" style="border-radius:8px;">
+                Create Listing Hook
+            </button>
             
         </form>
     </div>
