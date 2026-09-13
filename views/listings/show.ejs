@@ -65,7 +65,7 @@
         <hr>
         <% } %>
 
-        <% if(listing.reviews.length > 0) { %>
+        <% if(listing.reviews && listing.reviews.length > 0) { %>
         <p class="fw-bold text-dark mb-3">All Reviews</p>
         <div class="row m-0 g-3">
             <% for(let review of listing.reviews){ %>
@@ -94,25 +94,7 @@
 </div>
 
 <script>
+    const mapToken = "<%= mapToken %>";
     const listing = <%- JSON.stringify(listing) %>;
-    
-    const coordinates = (listing.geometry && listing.geometry.coordinates && listing.geometry.coordinates.length === 2) 
-                        ? listing.geometry.coordinates 
-                        : [78.0421, 30.3165]; 
-
-    const mapToken = "brdkecnzeNCGLZ1p8I7s";
-    maptilersdk.config.apiKey = mapToken;
-
-    const map = new maptilersdk.Map({
-        container: 'map', 
-        style: maptilersdk.MapStyle.STREETS, 
-        center: coordinates, 
-        zoom: 2
-    });
-
-    new maptilersdk.Marker({ color: "#fe424d" }) 
-        .setLngLat(coordinates)
-        .setPopup(new maptilersdk.Popup({ offset: 25 })
-        .setHTML(`<h5>${listing.title}</h5><p>Exact location provided after booking</p>`))
-        .addTo(map);
 </script>
+<script src="/js/map.js"></script>
