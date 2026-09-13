@@ -1,8 +1,5 @@
 <% layout("layouts/boilerplate") -%>
 
-<link href="https://unpkg.com/maplibre-gl@latest/dist/maplibre-gl.css" rel="stylesheet" />
-<script src="https://unpkg.com/maplibre-gl@latest/dist/maplibre-gl.js"></script>
-
 <div class="row mt-3 px-2 px-md-0">
     <div class="col-12 col-md-8 offset-md-3">
         <h3 class="premium-title-black"><%= listing.title %></h3>
@@ -97,24 +94,25 @@
 </div>
 
 <script>
-    const listing = JSON.parse(`<%- JSON.stringify(listing) %>`);
+    const listing = <%- JSON.stringify(listing) %>;
     
     const coordinates = (listing.geometry && listing.geometry.coordinates && listing.geometry.coordinates.length === 2) 
                         ? listing.geometry.coordinates 
                         : [78.0421, 30.3165]; 
 
     const mapToken = "brdkecnzeNCGLZ1p8I7s";
+    maptilersdk.config.apiKey = mapToken;
 
-    const map = new maplibregl.Map({
+    const map = new maptilersdk.Map({
         container: 'map', 
-        style: `https://api.maptiler.com/maps/streets-v2/style.json?key=${mapToken}`, 
+        style: maptilersdk.MapStyle.STREETS, 
         center: coordinates, 
         zoom: 9 
     });
 
-    const marker = new maplibregl.Marker({ color: "#fe424d" }) 
+    new maptilersdk.Marker({ color: "#fe424d" }) 
         .setLngLat(coordinates)
-        .setPopup(new maplibregl.Popup({ offset: 25 })
+        .setPopup(new maptilersdk.Popup({ offset: 25 })
         .setHTML(`<h5>${listing.title}</h5><p>Exact location provided after booking</p>`))
         .addTo(map);
 </script>
