@@ -2,318 +2,328 @@
    1. Base Application & Body Elements
    ========================================================================== */
 body {
-    font-family: "Plus Jakarta Sans", sans-serif !important;
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-    background-color: #ffffff;
+  font-family: "Plus Jakarta Sans", sans-serif !important;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: #ffffff;
 }
 
 .container {
-    flex: 1;
-    max-width: 100% !important;
-    padding-left: 2rem !important;
-    padding-right: 2rem !important;
+  flex: 1;
+  max-width: 100% !important;
+  padding-left: 2rem !important;
+  padding-right: 2rem !important;
 }
 
 /* ==========================================================================
    2. Header & Navigation Component - CLEAN BLACK OVERRIDES (Airbnb Style)
    ========================================================================== */
 .navbar {
-    min-height: 5rem;
-    background-color: white;
+  min-height: 5rem;
+  background-color: white;
 }
 
 .fa-compass {
-    color: #fe424d;
-    font-size: 2rem;
+  color: #fe424d;
+  font-size: 2rem;
 }
 
 /* 🌟 This specific block forces all links in navbar to be standard black */
 .navbar-nav .nav-link {
-    color: #222222 !important; /* Forces black color, overriding any defaults */
-    font-weight: 500 !important;
+  color: #222222 !important; /* Forces black color, overriding any defaults */
+  font-weight: 500 !important;
 }
 
 .navbar-nav .nav-link:hover {
-    color: #717171 !important; /* Slight grey on hover, standard Airbnb feel */
+  color: #717171 !important; /* Slight grey on hover, standard Airbnb feel */
 }
 /* ==========================================================================
    3. Premium Action Buttons (Airbnb Theme)
    ========================================================================== */
 .btn-stylish-edit {
-    background-color: #222222 !important;
-    color: #ffffff !important;
-    font-weight: 600 !important;
-    border: 1px solid #222222 !important;
-    border-radius: 8px !important;
-    transition: all 0.2s ease-in-out !important;
+  background-color: #222222 !important;
+  color: #ffffff !important;
+  font-weight: 600 !important;
+  border: 1px solid #222222 !important;
+  border-radius: 8px !important;
+  transition: all 0.2s ease-in-out !important;
 }
 
 .btn-stylish-edit:hover {
-    background-color: #ffffff !important;
-    color: #222222 !important;
-    border-color: #222222 !important;
+  background-color: #ffffff !important;
+  color: #222222 !important;
+  border-color: #222222 !important;
 }
 
 .btn-stylish-delete {
-    background: linear-gradient(135deg, #fe424d 0%, #e61e4d 100%) !important;
-    color: #ffffff !important;
-    font-weight: 600 !important;
-    border: none !important;
-    border-radius: 8px !important;
-    box-shadow: 0 3px 8px rgba(254, 66, 77, 0.2) !important;
-    transition: all 0.2s ease-in-out !important;
+  background: linear-gradient(135deg, #fe424d 0%, #e61e4d 100%) !important;
+  color: #ffffff !important;
+  font-weight: 600 !important;
+  border: none !important;
+  border-radius: 8px !important;
+  box-shadow: 0 3px 8px rgba(254, 66, 77, 0.2) !important;
+  transition: all 0.2s ease-in-out !important;
 }
 
 .btn-stylish-delete:hover {
-    background: linear-gradient(135deg, #e61e4d 0%, #bd103b 100%) !important;
-    box-shadow: 0 4px 12px rgba(254, 66, 77, 0.35) !important;
-    transform: translateY(-1px);
+  background: linear-gradient(135deg, #e61e4d 0%, #bd103b 100%) !important;
+  box-shadow: 0 4px 12px rgba(254, 66, 77, 0.35) !important;
+  transform: translateY(-1px);
 }
 
 .show-img {
-    height: 45vh;
-    border-radius: 1rem;
-    object-fit: cover;
-    width: 100%;
+  height: 45vh;
+  border-radius: 1rem;
+  object-fit: cover;
+  width: 100%;
 }
 
 .show-card {
-    padding-left: 0;
-    padding-right: 0;
+  padding-left: 0;
+  padding-right: 0;
 }
 
 /* ==========================================================================
    4. Footer Systems Layout
    ========================================================================== */
 .f-info {
-    text-align: center;
-    height: 8rem;
-    background-color: #ebebeb;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: space-evenly;
+  text-align: center;
+  height: 8rem;
+  background-color: #ebebeb;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: space-evenly;
 }
 
 .f-info-links a {
-    text-decoration: none;
-    color: #222222;
+  text-decoration: none;
+  color: #222222;
 }
 
 .f-info-links a:hover {
-    text-decoration: underline;
+  text-decoration: underline;
 }
 
 /* ==========================================================================
    5. Native Airbnb Flexbox Layout Grid (TRUE RESPONSIVE GRID FIX)
    ========================================================================== */
 .airbnb-custom-grid {
-    display: flex !important;
-    flex-flow: row wrap !important;
-    width: 100% !important;
-    margin: 0 auto !important;
-    padding: 0 !important;
-    box-sizing: border-box !important;
+  display: flex !important;
+  flex-flow: row wrap !important;
+  width: 100% !important;
+  margin: 0 auto !important;
+  padding: 0 !important;
+  box-sizing: border-box !important;
 }
 
 /* Desktop: Pure 4 Columns Layout (25% exact width) */
 .airbnb-custom-col {
-    flex: 0 0 25% !important;
-    width: 25% !important;
-    max-width: 25% !important;
-    padding: 12px !important;
-    box-sizing: border-box !important;
-    display: block !important;
+  flex: 0 0 25% !important;
+  width: 25% !important;
+  max-width: 25% !important;
+  padding: 12px !important;
+  box-sizing: border-box !important;
+  display: block !important;
 }
 
 .airbnb-custom-card {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    position: relative;
-    background: transparent;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  position: relative;
+  background: transparent;
 }
 
 .airbnb-custom-img-box {
-    position: relative;
-    width: 100%;
-    aspect-ratio: 1 / 1 !important; 
-    overflow: hidden;
-    border-radius: 0.75rem !important;
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1 !important;
+  overflow: hidden;
+  border-radius: 0.75rem !important;
 }
 
 .airbnb-custom-img-box img {
-    width: 100% !important;
-    height: 100% !important;
-    object-fit: cover !important;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
 }
 
 .airbnb-custom-metadata {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    margin-top: 0.35rem;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-top: 0.35rem;
 }
 
 .metadata-header-line {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
 }
 
 .wishlist-heart-icon {
-    position: absolute;
-    top: 0.5rem;
-    right: 0.5rem;
-    z-index: 5;
-    color: #ffffff;
-    font-size: 1.15rem;
-    filter: drop-shadow(0px 1px 3px rgba(0,0,0,0.6));
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  z-index: 5;
+  color: #ffffff;
+  font-size: 1.15rem;
+  filter: drop-shadow(0px 1px 3px rgba(0, 0, 0, 0.6));
 }
 
 /* 🌟 RESET BLUE LINKS ON HOME PAGE */
-.listing-link, 
-.listing-link:hover, 
+.listing-link,
+.listing-link:hover,
 .listing-link:visited {
-    color: #222222 !important; /* Soft premium black */
-    text-decoration: none !important; /* No under-lines */
+  color: #222222 !important; /* Soft premium black */
+  text-decoration: none !important; /* No under-lines */
 }
 
 .responsive-title {
-    color: #222222 !important;
-    font-weight: 600 !important;
+  color: #222222 !important;
+  font-weight: 600 !important;
 }
 
 /* ==========================================================================
    6. Custom Starability Core Fallback Injection
    ========================================================================== */
 .starability-slot {
-    display: block;
-    position: relative;
-    width: auto;
-    min-height: 2em;
-    border: none;
-    padding: 0;
-    margin: 0;
+  display: block;
+  position: relative;
+  width: auto;
+  min-height: 2em;
+  border: none;
+  padding: 0;
+  margin: 0;
 }
 .starability-slot > input {
-    position: absolute;
-    margin-right: -9999px;
-    opacity: 0;
+  position: absolute;
+  margin-right: -9999px;
+  opacity: 0;
 }
 .starability-slot > label {
-    position: relative;
-    float: right;
-    width: 30px;
-    height: 30px;
-    color: #ddd;
-    cursor: pointer;
-    font-size: 24px;
+  position: relative;
+  float: right;
+  width: 30px;
+  height: 30px;
+  color: #ddd;
+  cursor: pointer;
+  font-size: 24px;
 }
 .starability-slot > label:before {
-    content: "\2605";
+  content: "\2605";
 }
 .starability-slot > input:checked ~ label,
 .starability-slot > label:hover,
 .starability-slot > label:hover ~ label {
-    color: #ffb400;
+  color: #ffb400;
 }
 
 .starability-result {
-    position: relative;
-    display: inline-block;
-    width: 80px;
-    height: 16px;
-    font-size: 16px;
-    color: #ffb400;
+  position: relative;
+  display: inline-block;
+  width: 80px;
+  height: 16px;
+  font-size: 16px;
+  color: #ffb400;
 }
 .starability-result::before {
-    content: "\2605\2605\2605\2605\2605";
-    color: #ddd;
-    position: absolute;
-    left: 0;
-    top: 0;
+  content: "\2605\2605\2605\2605\2605";
+  color: #ddd;
+  position: absolute;
+  left: 0;
+  top: 0;
 }
 .starability-result::after {
-    position: absolute;
-    left: 0;
-    top: 0;
-    white-space: nowrap;
-    overflow: hidden;
-    color: #ffb400;
-    content: "\2605\2605\2605\2605\2605";
+  position: absolute;
+  left: 0;
+  top: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  color: #ffb400;
+  content: "\2605\2605\2605\2605\2605";
 }
-.starability-result[data-rating="1"]::after { width: 20%; }
-.starability-result[data-rating="2"]::after { width: 40%; }
-.starability-result[data-rating="3"]::after { width: 60%; }
-.starability-result[data-rating="4"]::after { width: 80%; }
-.starability-result[data-rating="5"]::after { width: 100%; }
+.starability-result[data-rating="1"]::after {
+  width: 20%;
+}
+.starability-result[data-rating="2"]::after {
+  width: 40%;
+}
+.starability-result[data-rating="3"]::after {
+  width: 60%;
+}
+.starability-result[data-rating="4"]::after {
+  width: 80%;
+}
+.starability-result[data-rating="5"]::after {
+  width: 100%;
+}
 
 /* ==========================================================================
    7. Production Structural Word-Wrap Layout Patches (Review Text Box Fix)
    ========================================================================== */
 .review-card-box {
-    word-break: break-word !important;
-    overflow-wrap: break-word !important;
-    white-space: normal !important;
+  word-break: break-word !important;
+  overflow-wrap: break-word !important;
+  white-space: normal !important;
 }
 .review-card-box .card-title {
-    word-wrap: break-word !important;
-    overflow-wrap: break-word !important;
-    white-space: normal !important;
+  word-wrap: break-word !important;
+  overflow-wrap: break-word !important;
+  white-space: normal !important;
 }
 
 /* ==========================================================================
    8. Airbnb Styling & Theme Colour Overrides
    ========================================================================== */
 .premium-title-black {
-    color: #222222 !important;
-    font-weight: 700 !important;
-    font-size: 1.8rem;
+  color: #222222 !important;
+  font-weight: 700 !important;
+  font-size: 1.8rem;
 }
 .premium-owner-black {
-    color: #222222 !important;
-    font-weight: 700 !important;
+  color: #222222 !important;
+  font-weight: 700 !important;
 }
 .premium-text-light-black {
-    color: #5a5a5a !important; /* Elegant slate grey format */
+  color: #5a5a5a !important; /* Elegant slate grey format */
 }
 .btn-review-submit {
-    background-color: #222222 !important;
-    color: #ffffff !important;
-    border: 1px solid #222222 !important;
-    font-weight: 600 !important;
-    transition: all 0.2s ease-in-out !important;
+  background-color: #222222 !important;
+  color: #ffffff !important;
+  border: 1px solid #222222 !important;
+  font-weight: 600 !important;
+  transition: all 0.2s ease-in-out !important;
 }
 .btn-review-submit:hover {
-    background-color: #004b87 !important; /* Blue on hover state */
-    color: #ffffff !important;
-    border-color: #004b87 !important;
+  background-color: #004b87 !important; /* Blue on hover state */
+  color: #ffffff !important;
+  border-color: #004b87 !important;
 }
 .btn-green-submit {
-    background: linear-gradient(135deg, #2ea44f 0%, #238636 100%) !important;
-    color: #ffffff !important;
-    font-weight: 700 !important;
-    border: none !important;
-    border-radius: 8px !important;
-    transition: all 0.2s ease-in-out !important;
+  background: linear-gradient(135deg, #2ea44f 0%, #238636 100%) !important;
+  color: #ffffff !important;
+  font-weight: 700 !important;
+  border: none !important;
+  border-radius: 8px !important;
+  transition: all 0.2s ease-in-out !important;
 }
 .btn-green-submit:hover {
-    background: linear-gradient(135deg, #2c974b 0%, #1e6d2f 100%) !important;
+  background: linear-gradient(135deg, #2c974b 0%, #1e6d2f 100%) !important;
 }
 
 /* 🌟 RESET RED TAX INFO STRINGS TO SLATE GREY */
 .tax-info.tax-inline-info {
-    color: #717171 !important; 
-    font-weight: 400 !important;
-    font-style: normal !important; 
+  color: #717171 !important;
+  font-weight: 400 !important;
+  font-style: normal !important;
 }
 
 .location-country-text {
-    color: #717171 !important;
+  color: #717171 !important;
 }
 
 /* ==========================================================================
@@ -322,32 +332,43 @@ body {
 
 /* Laptop / Tablets Layout (3 Columns) */
 @media (max-width: 1200px) {
-    .airbnb-custom-col {
-        flex: 0 0 33.333% !important;
-        width: 33.333% !important;
-        max-width: 33.333% !important;
-    }
+  .airbnb-custom-col {
+    flex: 0 0 33.333% !important;
+    width: 33.333% !important;
+    max-width: 33.333% !important;
+  }
 }
 
 /* Small Screens Layout (2 Columns) */
 @media (max-width: 767px) {
-    .airbnb-custom-col {
-        flex: 0 0 50% !important;
-        width: 50% !important;
-        max-width: 50% !important;
-    }
+  .airbnb-custom-col {
+    flex: 0 0 50% !important;
+    width: 50% !important;
+    max-width: 50% !important;
+  }
 }
 
 /* Compact Mobile View (2 Columns with clean margins) */
 @media (max-width: 575px) {
-    .airbnb-custom-col {
-        flex: 0 0 50% !important;
-        width: 50% !important;
-        max-width: 50% !important;
-        padding: 6px !important; 
-    }
-    .container {
-        padding-left: 0.5rem !important;
-        padding-right: 0.5rem !important;
-    }
+  .airbnb-custom-col {
+    flex: 0 0 50% !important;
+    width: 50% !important;
+    max-width: 50% !important;
+    padding: 6px !important;
+  }
+  .container {
+    padding-left: 0.5rem !important;
+    padding-right: 0.5rem !important;
+  }
+}
+
+/* ==========================================================================
+   10. Mapbox / Map Container Styling
+   ========================================================================== */
+#map {
+  height: 400px !important;
+  width: 100% !important;
+  border-radius: 12px;
+  margin-top: 1rem;
+  margin-bottom: 2rem;
 }
